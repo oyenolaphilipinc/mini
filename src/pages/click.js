@@ -46,7 +46,7 @@ import {
     ],
   });
   
-  const Dash = () => {
+  const Click = () => {
     const [isScaled, setIsScaled] = useState(false);
     const [count, setCount] = useState(6122);
     const [showOne, setShowOne] = useState(false);
@@ -142,4 +142,4 @@ import {
     );
   };
   
-  export default Dash;
+  export default Click;
