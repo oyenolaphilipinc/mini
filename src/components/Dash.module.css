@@ -1,0 +1,19 @@
+.umaxCoin {
+    position: absolute;
+    display: inline-block;
+    animation: bounce 2s infinite;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  
+  @keyframes bounce {
+    0%, 100% {
+      top: 50%;
+      transform: translate(-50%, -50%) scale(1);
+    }
+    50% {
+      top: 10%;
+      transform: translate(-50%, -50%) scale(1.2);
+    }
+  }
