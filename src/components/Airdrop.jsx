@@ -13,8 +13,8 @@ const Airdrop = () => {
                 <p className="flex gap-1 text-sm text-gray-400"><span className="flex text-[#fbc347]"><Image src={"/coin.svg"} width={20} height={20} />+2 SC</span>tokens earned</p>
               </div>
             </div>
-            <div className="icon pt-2">
-              <Image src={"/verified.svg"} width={20} height={20} className='mr-4' />
+            <div className="icon">
+              <Image src={"/verified.svg"} width={20} height={20} className='mr-4 mt-3' />
             </div>
           </div>
           <div className="one border border-[#1d1d1d] bg-[#282828] w-11/12 px-2 py-2 mb-2 rounded-md mx-auto flex justify-between">
@@ -25,8 +25,8 @@ const Airdrop = () => {
                 <p className="flex gap-1 text-sm text-gray-400"><span className="flex text-[#fbc347]"><Image src={"/coin.svg"} width={20} height={20} />+2 SC</span>tokens earned</p>
               </div>
             </div>
-            <div className="icon pt-2">
-              <Image src={"/verified.svg"} width={20} height={20} className='mr-4' />
+            <div className="icon">
+              <Image src={"/verified.svg"} width={20} height={20} className='mr-4 mt-3' />
             </div>
           </div>
           <div className="one border border-[#1d1d1d] bg-[#282828] w-11/12 px-2 py-2 rounded-md mx-auto flex justify-between">
