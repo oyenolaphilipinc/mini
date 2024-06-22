@@ -60,7 +60,7 @@ const Stats = () => {
 
     return(
         <div className={`overflow-hidden h-screen bg-[#1d1d1d] ${poppins.className} text-white`}>
-            <div className="mb-8 pt-8">
+            <div className="mb-8 pt-2">
             {/* <div className="flex justify-between">
             <div className="text-white pl-6">
                 <h1 className="flex text-xl text-semibold"><IoMdClose className="w-8 h-8 mr-2" /> Minipanda</h1>
