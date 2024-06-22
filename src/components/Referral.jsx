@@ -24,7 +24,7 @@ const Referral = () => {
     return(
         <div className={`overflow-hidden h-screen bg-[#1d1d1d] ${poppins.className} text-white`}>
             <div>
-                <h1 className="text-xl text-center">23 Referrals</h1>
+                <h1 className="text-2xl text-center">23 Referrals</h1>
                 <div>
                     <p className="pl-4 pb-4 pt-8">My referral link:</p>
                     <div className="border px-2 py-2 w-11/12 border-[#1d1d1d] bg-[#282828] mx-auto flex justify-between rounded-md">
