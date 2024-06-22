@@ -5,7 +5,7 @@ const Airdrop = () => {
     return(
         <div className="socials">
           <h1 className="mb-4 pl-2 text-white">Join our socials</h1>
-          <div className="one border border-[#1d1d1d] bg-[#282828] w-11/12 px-2 py-2 mb-2 rounded-md mx-auto flex justify-between">
+          <div className="one border border-[#1d1d1d] bg-[#282828] w-11/12 px-2 py-3 mb-2 rounded-md mx-auto flex justify-between">
             <div className="flex">
               <Image src={"/telegram.svg"} height={30} width={30} className="mr-2" />
               <div className="text">
@@ -17,7 +17,7 @@ const Airdrop = () => {
               <Image src={"/verified.svg"} width={20} height={20} className='mr-4 mt-3' />
             </div>
           </div>
-          <div className="one border border-[#1d1d1d] bg-[#282828] w-11/12 px-2 py-2 mb-2 rounded-md mx-auto flex justify-between">
+          <div className="one border border-[#1d1d1d] bg-[#282828] w-11/12 px-2 py-3 mb-2 rounded-md mx-auto flex justify-between">
             <div className="flex">
               <Image src={"/telegram.svg"} height={30} width={30} className="mr-2" />
               <div className="text">
@@ -29,7 +29,7 @@ const Airdrop = () => {
               <Image src={"/verified.svg"} width={20} height={20} className='mr-4 mt-3' />
             </div>
           </div>
-          <div className="one border border-[#1d1d1d] bg-[#282828] w-11/12 px-2 py-2 rounded-md mx-auto flex justify-between">
+          <div className="one border border-[#1d1d1d] bg-[#282828] w-11/12 px-2 py-3 rounded-md mx-auto flex justify-between">
             <div className="flex">
               <Image src={"/x.svg"} height={30} width={30} className="mr-2" />
               <div className="text">
