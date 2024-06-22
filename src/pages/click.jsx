@@ -98,10 +98,10 @@ import Referral from "@/components/Referral";
             >
               <img
                 src={"/mini.svg"}
-                width={350}
-                height={350}
+                width={300}
+                height={300}
                 alt={"Coin"}
-                className="ml-4"
+                className="mx-auto"
               />
             </div>
             {showOne && (
