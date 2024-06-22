@@ -60,7 +60,7 @@ const Stats = () => {
 
     return(
         <div className={`overflow-hidden h-screen bg-[#1d1d1d] ${poppins.className} text-white`}>
-            <div className="mb-8 pt-2">
+            <div className="mb-8 pt-8">
             {/* <div className="flex justify-between">
             <div className="text-white pl-6">
                 <h1 className="flex text-xl text-semibold"><IoMdClose className="w-8 h-8 mr-2" /> Minipanda</h1>
@@ -69,7 +69,7 @@ const Stats = () => {
                 <BsThreeDotsVertical className="w-7 h-7" />
             </div>
             </div> */}
-            <h1 className="pl-4 pt-12">Statistics</h1>
+            <h1 className="pl-4">Statistics</h1>
             <div className="coin border text-white border-[#1d1d1d] bg-[#282828] w-11/12 mx-auto px-2 pt-3 pb-4 mt-4 rounded-md">
                 <h1 className="pl-4 pb-2">Total share balance:</h1>
                 <h1 className="flex pl-4 text-4xl font-bold"><Image src={"/coin.svg"} height={40} width={40} className="mr-1" /> 6122</h1>
