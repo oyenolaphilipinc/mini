@@ -28,6 +28,7 @@ import {
   import { BsThreeDotsVertical } from "react-icons/bs";
   import { FaFire } from "react-icons/fa";
   import { Poppins } from "next/font/google";
+import Link from "next/link";
   
   const poppins = Poppins({
     subsets: ["latin"],
@@ -107,7 +108,7 @@ import {
                 <span className="text-2xl font-normal">+1</span>
               </div>
             )}
-            <button className="flex mx-auto border px-6 py-2 rounded-full bg-[#fbce47] text-black border-[#1d1d1d] text-lg font-semibold"><FaFire className="w-5 h-5 mr-1 mt-1" />Boost</button>
+            <Link href={"/boost"} className="flex justify-center w-4/12 mx-auto border px-6 py-2 rounded-full bg-[#fbce47] text-black border-[#1d1d1d] text-lg font-semibold"><FaFire className="w-5 h-5 mr-1 mt-1" />Boost</Link>
           </div>
           <Flex
             position="fixed"
