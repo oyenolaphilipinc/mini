@@ -65,14 +65,14 @@ const Invites = () => {
     return(
         <div className={`bg-[#1d1d1d] h-screen ${poppins.className} overflow-hidden text-white`}>
         <div className="mb-8 pt-8">
-            <div className="flex justify-between">
+            {/* <div className="flex justify-between">
             <div className="text-white pl-6">
                 <h1 className="flex text-xl text-semibold"><IoMdClose className="w-8 h-8 mr-2" /> Minipanda</h1>
             </div>
             <div className="mr-4 text-white">
                 <BsThreeDotsVertical className="w-7 h-7" />
             </div>
-            </div>
+            </div> */}
         </div>
         <div className="invite">
             <p className="pb-4 pl-4">Invite friends</p>

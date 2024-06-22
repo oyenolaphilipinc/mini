@@ -79,14 +79,15 @@ import Referral from "@/components/Referral";
     return (
       <>
         <div className={`bg-[#1d1d1d] h-screen ${poppins.className} overflow-hidden`}>
-        <div className="mb-8 flex justify-between pt-8 border-b rounded-md pb-4 border-[#fbce47]">
+        {/* <div className="mb-8 flex justify-between pt-8 border-b rounded-md pb-4 border-[#fbce47]">
             <div className="text-white pl-6">
                 <h1 className="flex text-xl text-semibold"><IoMdClose className="w-8 h-8 mr-2" /> MiniPanda</h1>
             </div>
             <div className="mr-4 text-white">
                 <BsThreeDotsVertical className="w-7 h-7" />
             </div>
-        </div>
+        </div> */}
+        <div className="pt-16"></div>
           <div className="text-center text-white pt-4">
             <p className="flex justify-center text-5xl font-bold pb-3"><Image src={"/coin.svg"} width={50} height={50} className="mr-1" />{count}</p>
             <p className="text-md font-normal flex justify-center">
