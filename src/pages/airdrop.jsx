@@ -114,7 +114,7 @@ const airdrop = () => {
                 <p className="flex gap-1 text-sm text-gray-400"><span className="flex text-[#fbc347]"><Image src={"/coin.svg"} width={20} height={20} />+2 SC</span>tokens earned</p>
               </div>
             </div>
-            <div className="icon pt-2">
+            <div className="icon pt-2 hidden">
               <Image src={"/verified.svg"} width={20} height={20} className='mr-4' />
             </div>
           </div>

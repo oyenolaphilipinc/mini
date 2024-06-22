@@ -23,6 +23,7 @@ import {
   import { FaFireAlt } from "react-icons/fa";
   import NextLink from "next/link";
   import Image from "next/image";
+  import Coin from "../components/icons/CoinIcon"
   import styles from "../components/Dash.module.css";
   import { IoMdClose } from "react-icons/io";
   import { BsThreeDotsVertical } from "react-icons/bs";
@@ -64,7 +65,7 @@ import Link from "next/link";
     };
   
     const navData = [
-      { icon: FaFireAlt, title: "Click", link: "/click" },
+      { icon: Coin, title: "Click", link: "/click" },
       { icon: SiGoogletasks, title: "Airdrop", link: "/airdrop" },
       { icon: MdSpaceDashboard, title: "Levels", link: "/" },
       { icon: IoMdStats , title: "Stats", link: "/stats" },
