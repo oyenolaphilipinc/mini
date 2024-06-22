@@ -49,7 +49,7 @@ const airdrop = () => {
         { icon: FaFireAlt, title: "Click", link: "/click" },
         { icon: SiGoogletasks, title: "Airdrop", link: "/airdrop" },
         { icon: MdSpaceDashboard, title: "Levels", link: "/" },
-        { icon: IoMdStats , title: "Stats", link: "/boost" },
+        { icon: IoMdStats , title: "Stats", link: "/stats" },
         { icon: MdGroups, title: "Invites", link: "/invites" },
       ];
     
@@ -59,7 +59,7 @@ const airdrop = () => {
 
   return (
     <div className={`bg-[#1d1d1d] h-screen ${poppins.className} overflow-hidden`}>
-        <div className="mb-8 pt-8 border-b rounded-md pb-4 border-[#fbce47]">
+        <div className="mb-8 pt-8 border-b rounded-md pb-4 border-[#fbce47] shadow-lg">
             <div className="flex justify-between">
             <div className="text-white pl-6">
                 <h1 className="flex text-xl text-semibold"><IoMdClose className="w-8 h-8 mr-2" /> Minipanda</h1>
@@ -74,6 +74,10 @@ const airdrop = () => {
                     <p className="text-sm font-normal">Level</p>
                     <p className="text-sm font-semibold">1</p>
                 </div>
+            </div>
+            <div className="button mt-4 flex justify-center gap-3">
+                <button className="flex border border-[#1d1d1d] bg-[#423c2c] text-[#fbce47] px-2 py-1 rounded-md"><Image src={"/umbrella.svg"} height={20} width={20} className="mr-1" />Airdrop</button>
+                <button className="flex border border-[#1d1d1d] bg-[#423c2c] text-gray-400 px-2 py-1 rounded-md"><Image src={"/gift.svg"} height={20} width={20} className="mr-1" />Referrals</button>
             </div>
         </div>
         <Flex

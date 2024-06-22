@@ -49,7 +49,7 @@ const Dash = () => {
         { icon: FaFireAlt, title: "Click", link: "/click" },
         { icon: SiGoogletasks, title: "Airdrop", link: "/airdrop" },
         { icon: MdSpaceDashboard, title: "Levels", link: "/" },
-        { icon: IoMdStats , title: "Stats", link: "/boost" },
+        { icon: IoMdStats , title: "Stats", link: "/stats" },
         { icon: MdGroups, title: "Invites", link: "/invites" },
       ];
     
