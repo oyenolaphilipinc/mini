@@ -78,8 +78,8 @@ const Dash = () => {
         </div>
         <div className="levels">
             <div className="normal flex justify-between mb-4">
-                <p className="pl-2">Levels</p>
-                <p className="text-[#fbc347] underline pr-2">Claim all</p>
+                <p className="pl-4">Levels</p>
+                <p className="text-[#fbc347] underline pr-4">Claim all</p>
             </div>
             <div className="hello border flex justify-between bg-[#282828] border-[#1d1d1d] w-11/12 mx-auto px-2 py-2 rounded-md mb-3">
                 <div className="pl-2">
