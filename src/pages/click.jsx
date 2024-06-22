@@ -29,6 +29,7 @@ import {
   import { FaFire } from "react-icons/fa";
   import { Poppins } from "next/font/google";
 import Link from "next/link";
+import Referral from "@/components/Referral";
   
   const poppins = Poppins({
     subsets: ["latin"],

@@ -24,6 +24,8 @@ import {
   import Image from "next/image";
   import { BsThreeDotsVertical } from "react-icons/bs";
 import { Poppins } from "next/font/google";
+import Referral from '@/components/Referral';
+import Airdrop from '@/components/Airdrop';
   
 const poppins = Poppins({
   subsets: ["latin"],
@@ -42,9 +44,16 @@ const poppins = Poppins({
   ],
 });
 
+const tabs = [
+  { name: "Airdrop", tab: "airdrop", href: "/umbrella.svg" },
+  { name: "Referral", tab: "referral", href: "/gift.svg" },
+];
+
 
 const airdrop = () => {
     const [activeLink, setActiveLink] = useState("/airdrop");
+    const [currentTab, setCurrentTab] = useState("airdrop");
+
     const navData = [
         { icon: FaFireAlt, title: "Click", link: "/click" },
         { icon: SiGoogletasks, title: "Airdrop", link: "/airdrop" },
@@ -55,6 +64,17 @@ const airdrop = () => {
     
       const handleNavClick = (link) => {
         setActiveLink(link);
+      };
+
+      const renderContent = () => {
+        switch (currentTab) {
+          case "airdrop":
+            return <Airdrop key={"airdrop"}/>
+          case "referral":
+            return <Referral key={"referral"} />;
+          default:
+            return null;
+        }
       };
 
   return (
@@ -76,49 +96,12 @@ const airdrop = () => {
                 </div>
             </div>
             <div className="button mt-4 flex justify-center gap-3">
-                <button className="flex border border-[#1d1d1d] bg-[#423c2c] text-[#fbce47] px-2 py-1 rounded-md"><Image src={"/umbrella.svg"} height={20} width={20} className="mr-1" />Airdrop</button>
-                <button className="flex border border-[#1d1d1d] bg-[#2c2c2c] text-gray-400 px-2 py-1 rounded-md"><Image src={"/gift.svg"} height={20} width={20} className="mr-1" />Referrals</button>
+              {tabs.map((tab, index) => (
+                <button key={index} onClick={() => setCurrentTab(tab.tab)} className={`flex border border-[#1d1d1d] px-2 py-1 rounded-md ${currentTab === tab.tab ? "bg-[#423c2c] text-[#fbce47]" : "bg-[#282828] text-gray-400"}`}><Image src={tab.href} height={20} width={20} className="mr-1" />{tab.name}</button>
+              ))}
             </div>
         </div>
-        <div className="socials">
-          <h1 className="mb-4 pl-2 text-white">Join our socials</h1>
-          <div className="one border border-[#1d1d1d] bg-[#282828] w-11/12 px-2 py-2 mb-2 rounded-md mx-auto flex justify-between">
-            <div className="flex">
-              <Image src={"/telegram.svg"} height={30} width={30} className="mr-2" />
-              <div className="text">
-                <p className="text-sm text-white">Telegram</p>
-                <p className="flex gap-1 text-sm text-gray-400"><span className="flex text-[#fbc347]"><Image src={"/coin.svg"} width={20} height={20} />+2 SC</span>tokens earned</p>
-              </div>
-            </div>
-            <div className="icon pt-2">
-              <Image src={"/verified.svg"} width={20} height={20} className='mr-4' />
-            </div>
-          </div>
-          <div className="one border border-[#1d1d1d] bg-[#282828] w-11/12 px-2 py-2 mb-2 rounded-md mx-auto flex justify-between">
-            <div className="flex">
-              <Image src={"/telegram.svg"} height={30} width={30} className="mr-2" />
-              <div className="text">
-                <p className="text-sm text-white">Telegram group</p>
-                <p className="flex gap-1 text-sm text-gray-400"><span className="flex text-[#fbc347]"><Image src={"/coin.svg"} width={20} height={20} />+2 SC</span>tokens earned</p>
-              </div>
-            </div>
-            <div className="icon pt-2">
-              <Image src={"/verified.svg"} width={20} height={20} className='mr-4' />
-            </div>
-          </div>
-          <div className="one border border-[#1d1d1d] bg-[#282828] w-11/12 px-2 py-2 rounded-md mx-auto flex justify-between">
-            <div className="flex">
-              <Image src={"/x.svg"} height={30} width={30} className="mr-2" />
-              <div className="text">
-                <p className="text-sm text-white">X</p>
-                <p className="flex gap-1 text-sm text-gray-400"><span className="flex text-[#fbc347]"><Image src={"/coin.svg"} width={20} height={20} />+2 SC</span>tokens earned</p>
-              </div>
-            </div>
-            <div className="icon pt-2 hidden">
-              <Image src={"/verified.svg"} width={20} height={20} className='mr-4' />
-            </div>
-          </div>
-        </div>
+        <div>{renderContent()}</div>
         <Flex
             position="fixed"
             bottom={0}
