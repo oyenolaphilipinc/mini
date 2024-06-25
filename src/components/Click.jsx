@@ -31,6 +31,7 @@ import {
 import Link from "next/link";
 import Referral from "@/components/Referral";
 import axios from "axios";
+import { useRouter } from "next/router";
   
   const poppins = Poppins({
     subsets: ["latin"],
@@ -49,7 +50,9 @@ import axios from "axios";
     ],
   });
   
-  const Click = ({ userId }) => {
+  const Click = () => {
+    const router = useRouter();
+    const { userId } = router.query;
     const [isScaled, setIsScaled] = useState(false);
     const [count, setCount] = useState(0);
     const [showOne, setShowOne] = useState(false);
@@ -58,7 +61,7 @@ import axios from "axios";
     useEffect(() => {
       const fetchBalance = async() => {
         try {
-          const res = await axios.get(`/api/getTapDetailsByUserId`, { params: { userId: 7 } });
+          const res = await axios.get(`/api/getTapDetailsByUserId`, { userId });
           if (res.data.success) {
             setCount(res.data.data.tapBalance);
           }
@@ -72,7 +75,7 @@ import axios from "axios";
 
     const updateBalance = async (amount) => {
       try {
-        const res = await axios.post('/api/updateBalance', { userId: 7, amount: amount });
+        const res = await axios.post('/api/updateBalance', { userId, amount: amount });
         if (res.data.success) {
           if (res.data.data.tapBalance !== null) {
             setCount(res.data.data.tapBalance);

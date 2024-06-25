@@ -3,16 +3,21 @@ import { Inter } from "next/font/google";
 import Click from "@/components/click";
 import { useEffect } from 'react';
 import axios from 'axios';
+import { useRouter } from "next/router";
 
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
+  const router = useRouter();
+  const { userId } = router.query;
+
   useEffect(() => {
+    if(userId){
     async function createTapDetails() {
       try {
         const response = await axios.post('/api/createTapDetails', {
-          userId: 10, // Replace with actual user ID logic
+          userId // Replace with actual user ID logic
         });
 
         console.log('TapDetails created:', response.data);
@@ -22,7 +27,8 @@ export default function Home() {
     }
 
     createTapDetails();
-  }, []);
+  }
+  }, [userId]);
   return (
     <>
       <Head>

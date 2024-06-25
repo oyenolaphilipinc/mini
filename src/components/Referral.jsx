@@ -3,6 +3,7 @@ import { Poppins } from "next/font/google";
 import Image from "next/image";
 import Link from "next/link";
 import axios from "axios";
+import { useRouter } from "next/router";
   
 const poppins = Poppins({
   subsets: ["latin"],
@@ -21,7 +22,9 @@ const poppins = Poppins({
   ],
 });
 
-const Referral = ({ userId }) => {
+const Referral = () => {
+    const router = useRouter();
+    const { userId } = router.query;
     const [userDetails, setUserDetails] = useState(null);
 
     useEffect(() => {

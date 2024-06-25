@@ -27,6 +27,7 @@ import { Poppins } from "next/font/google";
 import Referral from '@/components/Referral';
 import Airdrop from '@/components/Airdrop';
 import axios from "axios";
+import { useRouter } from 'next/router';
   
 const poppins = Poppins({
   subsets: ["latin"],
@@ -52,7 +53,8 @@ const tabs = [
 
 
 const airdrop = () => {
-    const userId = 2146305061;
+    const router = useRouter();
+    const { userId } = router.query;
     const [activeLink, setActiveLink] = useState("/airdrop");
     const [currentTab, setCurrentTab] = useState("airdrop");
     const [count, setCount] = useState(0);
@@ -84,7 +86,7 @@ const airdrop = () => {
       useEffect(() => {
         const fetchBalance = async () => {
             try {
-                const res = await axios.get(`/api/getTapDetailsByUserId`, { params: { userId: 10 } });
+                const res = await axios.get(`/api/getTapDetailsByUserId`, { userId });
                 if (res.data.success) {
                   setCount(res.data.data.tapBalance);
                 }
@@ -96,7 +98,7 @@ const airdrop = () => {
 
         const getLevel = async () => {
           try{
-              const response = await axios.get("/api/getTapDetailsByUserId", { params: { userId: 7 }});
+              const response = await axios.get("/api/getTapDetailsByUserId", { userId });
               if (response.data.success) {
                   setUserDetails(response.data.data);
               } else {
