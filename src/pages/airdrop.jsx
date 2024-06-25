@@ -96,7 +96,7 @@ const airdrop = () => {
 
         const getLevel = async () => {
           try{
-              const response = await axios.get("/api/getTapDetailsByUserId", { params: { userId: 10}});
+              const response = await axios.get("/api/getTapDetailsByUserId", { params: { userId: 7 }});
               if (response.data.success) {
                   setUserDetails(response.data.data);
               } else {
