@@ -58,7 +58,7 @@ import axios from "axios";
     useEffect(() => {
       const fetchBalance = async() => {
         try {
-          const res = await axios.get(`/api/getTapDetailsByUserId`, { params: { userId: 10 } });
+          const res = await axios.get(`/api/getTapDetailsByUserId`, { params: { userId: 7 } });
           if (res.data.success) {
             setCount(res.data.data.tapBalance);
           }
@@ -72,7 +72,7 @@ import axios from "axios";
 
     const updateBalance = async (amount) => {
       try {
-        const res = await axios.post('/api/updateBalance', { userId: 10, amount: amount });
+        const res = await axios.post('/api/updateBalance', { userId: 7, amount: amount });
         if (res.data.success) {
           if (res.data.data.tapBalance !== null) {
             setCount(res.data.data.tapBalance);
