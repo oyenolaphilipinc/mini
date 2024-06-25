@@ -58,9 +58,9 @@ import axios from "axios";
     useEffect(() => {
       const fetchBalance = async() => {
         try {
-          const res = await axios.get(`/api/getTapDetailsByUserId`, { params: { userId } });
+          const res = await axios.get(`/api/getTapDetailsByUserId`, { params: { userId: 10 } });
           if (res.data.success) {
-            setCount(res.data.data.balance);
+            setCount(res.data.data.tapBalance);
           }
         } catch (error) {
           console.error('Error fetching balance:', error);
@@ -72,9 +72,15 @@ import axios from "axios";
 
     const updateBalance = async (amount) => {
       try {
-        const res = await axios.post('/api/updateBalance', { userId, amount: amount });
+        const res = await axios.post('/api/updateBalance', { userId: 10, amount: amount });
         if (res.data.success) {
-          setBalance(res.data.data.balance);
+          if (res.data.data.tapBalance !== null) {
+            setCount(res.data.data.tapBalance);
+          } else {
+            console.error('Balance is null in response:', res.data.data);
+          }
+        } else {
+          console.error('Error response:', res.data.error);
         }
       } catch (error) {
         console.error('Error updating balance:', error);
@@ -82,9 +88,7 @@ import axios from "axios";
     };
   
     const handleImageClick = () => {
-      const newCount = count + 1;
-      setCount(newCount);
-      updateBalance(newCount);
+      updateBalance(count + 1);
       setShowOne(true);
       setIsScaled(true);
       setTimeout(() => {
@@ -108,14 +112,6 @@ import axios from "axios";
     return (
       <>
         <div className={`bg-[#1d1d1d] h-screen ${poppins.className} overflow-hidden`}>
-        {/* <div className="mb-8 flex justify-between pt-8 border-b rounded-md pb-4 border-[#fbce47]">
-            <div className="text-white pl-6">
-                <h1 className="flex text-xl text-semibold"><IoMdClose className="w-8 h-8 mr-2" /> MiniPanda</h1>
-            </div>
-            <div className="mr-4 text-white">
-                <BsThreeDotsVertical className="w-7 h-7" />
-            </div>
-        </div> */}
         <div className="pt-16"></div>
           <div className="text-center text-white pt-4">
             <p className="flex justify-center text-5xl font-bold pb-3"><Image src={"/coin.svg"} width={50} height={50} className="mr-1" />{count}</p>

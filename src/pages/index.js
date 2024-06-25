@@ -1,11 +1,28 @@
 import Head from "next/head";
 import { Inter } from "next/font/google";
 import Dash from "@/components/Dash";
+import { useEffect } from 'react';
+import axios from 'axios';
 
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
+  useEffect(() => {
+    async function createTapDetails() {
+      try {
+        const response = await axios.post('/api/createTapDetails', {
+          userId: 10, // Replace with actual user ID logic
+        });
+
+        console.log('TapDetails created:', response.data);
+      } catch (error) {
+        console.error('Error creating TapDetails:', error.response.data.error);
+      }
+    }
+
+    createTapDetails();
+  }, []);
   return (
     <>
       <Head>
