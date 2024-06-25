@@ -18,6 +18,6 @@ const userDetailsSchema = new mongoose.Schema({
     balance: { type: Number, default: 0 },
 }, { timestamps: true });
 
-const UserDetails = mongoose.model('Users', userDetailsSchema);
+const UserDetails = mongoose.models.Users || mongoose.model('Users', userDetailsSchema);
 
 export default UserDetails

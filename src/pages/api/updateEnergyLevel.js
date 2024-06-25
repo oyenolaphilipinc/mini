@@ -2,8 +2,9 @@ import { updateEnergyLevel } from "./controllers/Tap";
 import connectDB from "@/utils/connect";
 
 
-connectDB()
+
 export default async function handler(req, res) {
+    await connectDB()
     if (req.method === 'POST') {
         const { userId, amount } = req.body;
 

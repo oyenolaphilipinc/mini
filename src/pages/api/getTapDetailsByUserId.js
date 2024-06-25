@@ -1,9 +1,10 @@
 import { getTapDetailsByUserId } from "./controllers/Tap";
 import connectDB from "@/utils/connect";
 
-connectDB()
+
 export default async function handler(req, res) {
     const { userId } = req.query;
+    await connectDB()
 
     if (req.method === 'GET') {
         try {

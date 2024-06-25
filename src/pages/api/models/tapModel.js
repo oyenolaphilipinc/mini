@@ -8,6 +8,6 @@ const tapDetailsSchema = new mongoose.Schema({
     online: { type: Boolean, default: false },
 }, { timestamps: true });
 
-const TapDetails = mongoose.model('TapDetails', tapDetailsSchema);
+const TapDetails = mongoose.models.TapDetails || mongoose.model('TapDetails', tapDetailsSchema);
 
 export default TapDetails

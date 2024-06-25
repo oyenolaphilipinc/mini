@@ -3,6 +3,7 @@ import { updateOnlineStatus } from "./controllers/Tap";
 
 
 export default async function handler(req, res) {
+    await connectDB()
     if (req.method === 'POST') {
         const { userId, status } = req.body;
 

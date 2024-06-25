@@ -2,8 +2,9 @@ import connectDB from "@/utils/connect";
 import { getAllUsers } from "./controllers/users";
 
 
-connectDB()
+
 export default async function handler(req, res) {
+    await connectDB()
     if (req.method === 'GET') {
         try {
             const users = await getAllUsers();

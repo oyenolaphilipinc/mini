@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
     Card,
     CardBody,
@@ -46,6 +46,7 @@ const poppins = Poppins({
 
 const Stats = () => {
     const [activeLink, setActiveLink] = useState("/stats");
+    const [totalUsers, setTotalUsers] = useState(0)
     const navData = [
         { icon: FaFireAlt, title: "Click", link: "/click" },
         { icon: SiGoogletasks, title: "Airdrop", link: "/airdrop" },
@@ -57,6 +58,27 @@ const Stats = () => {
       const handleNavClick = (link) => {
         setActiveLink(link);
       };
+
+      const fetchUsers= async ()=>{
+        try {
+          const users = await fetch('/api/getAllUsers')
+          const data  = await users.json()
+          const len = data.data.length
+
+          console.log(len)
+          console.log('users', data)
+          
+          console.log(len)
+          setTotalUsers(len)
+        } catch (error) {
+          console.log(error)
+        }
+      }
+
+
+      useEffect(()=>{
+        fetchUsers()
+      }, [])
 
     return(
         <div className={`overflow-hidden h-screen bg-[#1d1d1d] ${poppins.className} text-white`}>
@@ -106,7 +128,7 @@ const Stats = () => {
                     <div className="mr-3 border py-2 px-6 bg-[#ba993b] rounded-md border-[#282828]"></div>
                     <div>
                         <h1 className='font-light'>Total players:</h1>
-                        <p className="font-medium">6,54,65,454</p>
+                        <p className="font-medium">{totalUsers}</p>
                     </div>
                 </div>
                 <div className="first mb-3 flex border w-11/12 border-[#1d1d1d] bg-[#282828] px-2 py-2 rounded-md mx-auto">

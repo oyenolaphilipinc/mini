@@ -2,9 +2,10 @@ import connectDB from "@/utils/connect";
 import { getUser} from "./controllers/users";
 
 
-connectDB()
+
 export default async function handler(req, res) {
     const { userId } = req.query;
+    await connectDB()
 
     if (req.method === 'GET') {
         try {
