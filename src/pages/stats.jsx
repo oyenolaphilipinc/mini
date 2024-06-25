@@ -25,6 +25,7 @@ import {
   import { BsThreeDotsVertical } from "react-icons/bs";
 import { Poppins } from "next/font/google";
 import BarChart from '@/components/Chart';
+import axios from "axios";
   
 const poppins = Poppins({
   subsets: ["latin"],
@@ -61,8 +62,8 @@ const Stats = () => {
 
       const fetchUsers= async ()=>{
         try {
-          const users = await fetch('/api/getAllUsers')
-          const data  = await users.json()
+          const users = await axios.get('/api/getAllUsers')
+          const data  = users.data;
           const len = data.data.length
 
           console.log(len)
@@ -94,7 +95,7 @@ const Stats = () => {
             <h1 className="pl-4">Statistics</h1>
             <div className="coin border text-white border-[#1d1d1d] bg-[#282828] w-11/12 mx-auto px-2 pt-3 pb-4 mt-4 rounded-md">
                 <h1 className="pl-4 pb-2">Total share balance:</h1>
-                <h1 className="flex pl-4 text-4xl font-bold"><Image src={"/coin.svg"} height={40} width={40} className="mr-1" /> 6122</h1>
+                <h1 className="flex pl-4 text-4xl font-bold"><Image src={"/coin.svg"} height={40} width={40} className="mr-1" alt='done' /> 6122</h1>
             </div>
             </div>
             <div className="images mb-6 flex justify-center gap-2">

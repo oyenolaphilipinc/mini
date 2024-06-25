@@ -51,6 +51,7 @@ const tabs = [
 
 
 const airdrop = () => {
+    const userId = 2146305061;
     const [activeLink, setActiveLink] = useState("/airdrop");
     const [currentTab, setCurrentTab] = useState("airdrop");
 
@@ -71,7 +72,7 @@ const airdrop = () => {
           case "airdrop":
             return <Airdrop key={"airdrop"}/>
           case "referral":
-            return <Referral key={"referral"} />;
+            return <Referral key={"referral"} userId={userId} />;
           default:
             return null;
         }

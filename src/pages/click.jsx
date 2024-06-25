@@ -30,6 +30,7 @@ import {
   import { Poppins } from "next/font/google";
 import Link from "next/link";
 import Referral from "@/components/Referral";
+import axios from "axios";
   
   const poppins = Poppins({
     subsets: ["latin"],
@@ -48,14 +49,42 @@ import Referral from "@/components/Referral";
     ],
   });
   
-  const Click = () => {
+  const Click = ({ userId }) => {
     const [isScaled, setIsScaled] = useState(false);
-    const [count, setCount] = useState(6122);
+    const [count, setCount] = useState(0);
     const [showOne, setShowOne] = useState(false);
     const [activeLink, setActiveLink] = useState("/click");
+
+    useEffect(() => {
+      const fetchBalance = async() => {
+        try {
+          const res = await axios.get(`/api/getTapDetailsByUserId`, { params: { userId } });
+          if (res.data.success) {
+            setCount(res.data.data.balance);
+          }
+        } catch (error) {
+          console.error('Error fetching balance:', error);
+        }
+      }
+  
+      fetchBalance();
+    }, [userId])
+
+    const updateBalance = async (amount) => {
+      try {
+        const res = await axios.post('/api/updateBalance', { userId, amount: amount });
+        if (res.data.success) {
+          setBalance(res.data.data.balance);
+        }
+      } catch (error) {
+        console.error('Error updating balance:', error);
+      }
+    };
   
     const handleImageClick = () => {
-      setCount(count + 1);
+      const newCount = count + 1;
+      setCount(newCount);
+      updateBalance(newCount);
       setShowOne(true);
       setIsScaled(true);
       setTimeout(() => {
