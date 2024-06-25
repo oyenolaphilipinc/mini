@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
     Card,
     CardBody,
@@ -26,6 +26,7 @@ import {
 import { Poppins } from "next/font/google";
 import Referral from '@/components/Referral';
 import Airdrop from '@/components/Airdrop';
+import axios from "axios";
   
 const poppins = Poppins({
   subsets: ["latin"],
@@ -54,6 +55,8 @@ const airdrop = () => {
     const userId = 2146305061;
     const [activeLink, setActiveLink] = useState("/airdrop");
     const [currentTab, setCurrentTab] = useState("airdrop");
+    const [count, setCount] = useState(0);
+    const [userDetails, setUserDetails] = useState(null);
 
     const navData = [
         { icon: FaFireAlt, title: "Click", link: "/click" },
@@ -78,6 +81,35 @@ const airdrop = () => {
         }
       };
 
+      useEffect(() => {
+        const fetchBalance = async () => {
+            try {
+                const res = await axios.get(`/api/getTapDetailsByUserId`, { params: { userId: 10 } });
+                if (res.data.success) {
+                  setCount(res.data.data.tapBalance);
+                }
+              } catch (error) {
+                console.error('Error fetching balance:', error);
+              }
+            }
+        fetchBalance()
+
+        const getLevel = async () => {
+          try{
+              const response = await axios.get("/api/getTapDetailsByUserId", { params: { userId: 10}});
+              if (response.data.success) {
+                  setUserDetails(response.data.data);
+              } else {
+                  setError('User not found');
+              }
+          } catch(error){
+              console.error("Error fetching data", error);
+          }
+      };
+
+      getLevel()
+      }, [userId])
+    
   return (
     <div className={`bg-[#1d1d1d] h-screen ${poppins.className} overflow-hidden`}>
         <div className="mb-8 pt-8 border-b rounded-md pb-4 border-[#fbce47] shadow-lg">
@@ -90,10 +122,12 @@ const airdrop = () => {
             </div>
             </div> */}
             <div className="coin border flex justify-between text-white border-[#1d1d1d] bg-[#282828] w-11/12 mx-auto px-2 py-2 mt-4 rounded-md">
-                <h1 className="flex pl-4 text-4xl font-bold"><Image src={"/coin.svg"} height={40} width={40} className="mr-1" /> 6122</h1>
+                <h1 className="flex pl-4 text-4xl font-bold"><Image src={"/coin.svg"} height={40} width={40} className="mr-1" />{count}</h1>
                 <div className="pr-6">
                     <p className="text-sm font-normal">Level</p>
-                    <p className="text-sm font-semibold">1</p>
+                    {userDetails && (
+                    <p className="text-sm font-semibold">{userDetails.level}</p>
+                    )}
                 </div>
             </div>
             <div className="button mt-4 flex justify-center gap-3">

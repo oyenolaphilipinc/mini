@@ -11,11 +11,11 @@ const getTapDetailsByUserId = async (userId) => {
     }
 };
 
-const updateBalance = async (userId, amount) => {
+const updateBalance = async (userId) => {
     try {
         const updatedTapDetails = await TapDetails.findOneAndUpdate(
             { userId },
-            { $inc: { tapBalance: amount } },
+            { $inc: { tapBalance: 1 } },
             { new: true }
         );
         return updatedTapDetails;
