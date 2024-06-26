@@ -32,6 +32,7 @@ import Link from "next/link";
 import Referral from "@/components/Referral";
 import axios from "axios";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 import debounce from "lodash.debounce";
 
   
@@ -110,7 +111,7 @@ import debounce from "lodash.debounce";
   }, [count, userId, debouncedUpdateBalance]);
 
     const navData = [
-      { icon: FaFireAlt, title: "Click", link: "https://mini-livid-zeta.vercel.app?userId=2146305061" },
+      { icon: FaFireAlt, title: "Click", link: "http://localhost:3000?userId=2146305061" },
       { icon: SiGoogletasks, title: "Airdrop", link: "/airdrop" },
       { icon: MdSpaceDashboard, title: "Levels", link: "/levels" },
       { icon: IoMdStats , title: "Stats", link: "/stats" },
