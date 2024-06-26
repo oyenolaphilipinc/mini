@@ -55,7 +55,7 @@ const Invites = () => {
     console.log(userId)
 
     const navData = [
-        { icon: FaFireAlt, title: "Click", link: "http://localhost:3000?userId=2146305061" },
+        { icon: FaFireAlt, title: "Click", link: `/?userId=${userId}` },
         { icon: SiGoogletasks, title: "Airdrop", link: `/airdrop?userId=${userId}` },
         { icon: MdSpaceDashboard, title: "Levels", link: `/levels?userId=${userId}` },
         { icon: IoMdStats , title: "Stats", link: `/stats?userId=${userId}` },
