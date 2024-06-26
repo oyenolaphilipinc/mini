@@ -29,6 +29,7 @@ import {
   import { FaFire } from "react-icons/fa";
   import { Poppins } from "next/font/google";
 import Link from "next/link";
+import { useRouter } from "next/router";
   
   const poppins = Poppins({
     subsets: ["latin"],
@@ -49,16 +50,20 @@ import Link from "next/link";
 
 const Invites = () => {
     const [activeLink, setActiveLink] = useState("/invites");
+    const router = useRouter()
+    const {userId} = router.query
+    console.log(userId)
 
     const navData = [
-        { icon: FaFireAlt, title: "Click", link: "/" },
-        { icon: SiGoogletasks, title: "Airdrop", link: "/airdrop" },
-        { icon: MdSpaceDashboard, title: "Levels", link: "/levels" },
-        { icon: IoMdStats , title: "Stats", link: "/stats" },
-        { icon: MdGroups, title: "Invites", link: "/invites" },
+        { icon: FaFireAlt, title: "Click", link: "http://localhost:3000?userId=2146305061" },
+        { icon: SiGoogletasks, title: "Airdrop", link: `/airdrop?userId=${userId}` },
+        { icon: MdSpaceDashboard, title: "Levels", link: `/levels?userId=${userId}` },
+        { icon: IoMdStats , title: "Stats", link: `/stats?userId=${userId}` },
+        { icon: MdGroups, title: "Invites", link: `/invites?userId=${userId}` },
       ];
     
       const handleNavClick = (link) => {
+      
         setActiveLink(link);
       };
 

@@ -94,6 +94,36 @@ const updateEnergyLevel = async (userId, decrementAmount, refillTime) => {
     }
 };
 
+const createTapDetails = async (userId) => {
+  try {
+    // Check for existing tap details
+    const existingDetails = await TapDetails.findOne({ userId });
+
+    if (existingDetails) {
+      // If details exist, return them
+      return existingDetails;
+    } else {
+      // If no details exist, create new ones with default values
+      const newTapDetails = new TapDetails({
+        userId,
+        tapBalance: 0,
+        tapEnergy: 750,
+        level: 1,
+        online: false,
+      });
+
+      // Save the new tap details to the database
+      await newTapDetails.save();
+
+      // Return the newly created tap details
+      return newTapDetails;
+    }
+  } catch (error) {
+    console.error('Error in createTapDetails:', error);
+    throw new Error('Unable to create or fetch tap details');
+  }
+};
+
 
 
 export {
@@ -101,5 +131,6 @@ export {
     updateBalance,
     updateEnergyLevel,
     updateOnlineStatus,
-    levelUp
+    levelUp,
+    createTapDetails
 }

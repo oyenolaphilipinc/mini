@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { Inter } from "next/font/google";
 import Click from "@/components/Click";
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useRouter } from "next/router";
 
@@ -11,24 +11,26 @@ const inter = Inter({ subsets: ["latin"] });
 export default function Home() {
   const router = useRouter();
   const { userId } = router.query;
+  console.log(userId)
+  const [tapDetails, setTapDetails] = useState(null)
 
-  useEffect(() => {
-    if(userId){
-    async function createTapDetails() {
-      try {
-        const response = await axios.post('/api/createTapDetails', {
-          userId // Replace with actual user ID logic
-        });
-
-        console.log('TapDetails created:', response.data);
-      } catch (error) {
-        console.error('Error creating TapDetails:', error.response.data.error);
+useEffect(() => {
+    if (userId != null && userId != undefined) {  // Ensure userId is not null or undefined
+      async function createTapDetails() {
+        try {
+          const response = await axios.post('/api/createTapDetails', {
+            userId: userId
+          });
+          setTapDetails(response.data)
+          console.log('TapDetails created:', response.data);
+        } catch (error) {
+          console.error('Error creating TapDetails:', error);
+        }
       }
-    }
 
-    createTapDetails();
-  }
-  }, [userId]);
+      createTapDetails();
+    }
+  }, [userId]); 
   return (
     <>
       <Head>
@@ -37,7 +39,7 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-        <Click />
+        <Click userId={userId}  tapDetails ={tapDetails}/>
     </>
   );
 }

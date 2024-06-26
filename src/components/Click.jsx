@@ -10,7 +10,7 @@ import {
     useColorModeValue,
     useBreakpointValue,
   } from "@chakra-ui/react";
-  import React, { useState, useEffect } from "react";
+  import React, { useState, useEffect, useCallback } from "react";
   import { GiTrophyCup } from "react-icons/gi";
   import { PiSpeedometer } from "react-icons/pi";
   import {
@@ -32,6 +32,8 @@ import Link from "next/link";
 import Referral from "@/components/Referral";
 import axios from "axios";
 import { useRouter } from "next/router";
+import debounce from "lodash.debounce";
+
   
   const poppins = Poppins({
     subsets: ["latin"],
@@ -50,18 +52,19 @@ import { useRouter } from "next/router";
     ],
   });
   
-  const Click = () => {
+  const Click = ({userId, tapDetails}) => {
     const router = useRouter();
-    const { userId } = router.query;
     const [isScaled, setIsScaled] = useState(false);
     const [count, setCount] = useState(0);
     const [showOne, setShowOne] = useState(false);
     const [activeLink, setActiveLink] = useState("/click");
 
-    useEffect(() => {
-      const fetchBalance = async() => {
+    console.log(tapDetails)
+
+    const fetchBalance = async() => {
+      if(!userId) return;
         try {
-          const res = await axios.get(`/api/getTapDetailsByUserId`, { userId });
+          const res = await axios.get(`/api/getTapDetailsByUserId?userId=${userId}`);
           if (res.data.success) {
             setCount(res.data.data.tapBalance);
           }
@@ -69,6 +72,9 @@ import { useRouter } from "next/router";
           console.error('Error fetching balance:', error);
         }
       }
+
+    useEffect(() => {
+      
   
       fetchBalance();
     }, [userId])
@@ -76,32 +82,35 @@ import { useRouter } from "next/router";
     const updateBalance = async (amount) => {
       try {
         const res = await axios.post('/api/updateBalance', { userId, amount: amount });
-        if (res.data.success) {
-          if (res.data.data.tapBalance !== null) {
-            setCount(res.data.data.tapBalance);
-          } else {
-            console.error('Balance is null in response:', res.data.data);
-          }
-        } else {
-          console.error('Error response:', res.data.error);
-        }
+        console.log(res)
       } catch (error) {
         console.error('Error updating balance:', error);
       }
     };
   
-    const handleImageClick = () => {
-      updateBalance(count + 1);
-      setShowOne(true);
-      setIsScaled(true);
-      setTimeout(() => {
-        setShowOne(false);
-        setIsScaled(false);
-      }, 500);
-    };
-  
+     const debouncedUpdateBalance = useCallback(
+    debounce((amount) => updateBalance(amount), 100),
+    []
+  );
+
+  const handleImageClick = () => {
+    setCount((prevCount) => prevCount + 1);
+    setShowOne(true);
+    setIsScaled(true);
+    setTimeout(() => {
+      setShowOne(false);
+      setIsScaled(false);
+    }, 500);
+  };
+
+  useEffect(() => {
+    if (userId !== null) {
+      debouncedUpdateBalance(count);
+    }
+  }, [count, userId, debouncedUpdateBalance]);
+
     const navData = [
-      { icon: FaFireAlt, title: "Click", link: "/" },
+      { icon: FaFireAlt, title: "Click", link: "http://localhost:3000?userId=2146305061" },
       { icon: SiGoogletasks, title: "Airdrop", link: "/airdrop" },
       { icon: MdSpaceDashboard, title: "Levels", link: "/levels" },
       { icon: IoMdStats , title: "Stats", link: "/stats" },
@@ -119,7 +128,8 @@ import { useRouter } from "next/router";
           <div className="text-center text-white pt-4">
             <p className="flex justify-center text-5xl font-bold pb-3"><Image src={"/coin.svg"} width={50} height={50} className="mr-1" />{count}</p>
             <p className="text-md font-normal flex justify-center">
-             <Image src={"/speedometer.svg"} width={20} height={20} className="mr-1" /> 954/954
+             <Image src={"/speedometer.svg"} width={20} height={20} className="mr-1" /> 
+             {tapDetails ? `${tapDetails.tapEnergy} /  ${tapDetails.tapEnergy}`: '0/0'}
             </p>
             <div
               className={`pt-12 transition-transform transform ${isScaled && "scale-75"} mb-16`}

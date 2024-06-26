@@ -1,20 +1,20 @@
-import TapDetails from "./models/tapModel";
+import { createTapDetails } from "./controllers/Tap";
 import connectDB from "@/utils/connect";
 
 
-export default async function handler(req, res) {
+export default async (req, res) => {
   await connectDB();
 
-  const { userId } = req.query;
+  if (req.method === 'POST') {
+    const { userId } = req.body;
 
-  if (!userId) {
-    return res.status(400).json({ error: 'User ID is required' });
+    try {
+      const tapDetails = await createTapDetails(userId);
+      res.status(200).json(tapDetails);
+    } catch (error) {
+      res.status(500).json({ error: 'Unable to create or fetch tap details' });
+    }
+  } else {
+    res.status(405).json({ error: 'Method not allowed' });
   }
-
-  try {
-    const tapDetails = await TapDetails.create({ userId });
-    res.status(201).json(tapDetails);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-}
+};
