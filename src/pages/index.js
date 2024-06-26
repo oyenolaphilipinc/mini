@@ -1,6 +1,6 @@
 import Head from "next/head";
 import { Inter } from "next/font/google";
-import Click from "@/components/click";
+import Click from "@/components/Click";
 import { useEffect } from 'react';
 import axios from 'axios';
 import { useRouter } from "next/router";
