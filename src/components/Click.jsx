@@ -101,9 +101,9 @@ import { useRouter } from "next/router";
     };
   
     const navData = [
-      { icon: FaFireAlt, title: "Click", link: "/click" },
+      { icon: FaFireAlt, title: "Click", link: "/" },
       { icon: SiGoogletasks, title: "Airdrop", link: "/airdrop" },
-      { icon: MdSpaceDashboard, title: "Levels", link: "/" },
+      { icon: MdSpaceDashboard, title: "Levels", link: "/levels" },
       { icon: IoMdStats , title: "Stats", link: "/stats" },
       { icon: MdGroups, title: "Invites", link: "/invites" },
     ];
