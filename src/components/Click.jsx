@@ -32,7 +32,6 @@ import Link from "next/link";
 import Referral from "@/components/Referral";
 import axios from "axios";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
 import debounce from "lodash.debounce";
 
   
