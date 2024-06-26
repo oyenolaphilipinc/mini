@@ -25,6 +25,7 @@ import {
   import { BsThreeDotsVertical } from "react-icons/bs";
 import { Poppins } from "next/font/google";
 import axios from "axios";
+import { useRouter } from "next/router"
   
 const poppins = Poppins({
   subsets: ["latin"],
@@ -44,7 +45,9 @@ const poppins = Poppins({
 });
 
 
-const Dash = ({ userId }) => {
+const Dash = () => {
+    const router = useRouter();
+    const { userId } = router.query;
     const [count, setCount] = useState(0);
     const [activeLink, setActiveLink] = useState("/");
     const navData = [
@@ -62,7 +65,7 @@ const Dash = ({ userId }) => {
       useEffect(() => {
         const fetchBalance = async () => {
             try {
-                const res = await axios.get(`/api/getTapDetailsByUserId`, { params: { userId: 10 } });
+                const res = await axios.get(`/api/getTapDetailsByUserId`, { userId });
                 if (res.data.success) {
                   setCount(res.data.data.tapBalance);
                 }

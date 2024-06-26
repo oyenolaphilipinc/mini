@@ -26,6 +26,7 @@ import {
 import { Poppins } from "next/font/google";
 import BarChart from '@/components/Chart';
 import axios from "axios";
+import { useRouter } from 'next/router';
   
 const poppins = Poppins({
   subsets: ["latin"],
@@ -46,8 +47,11 @@ const poppins = Poppins({
 
 
 const Stats = () => {
+    const router = useRouter();
+    const { userId } = router.query;
     const [activeLink, setActiveLink] = useState("/stats");
     const [totalUsers, setTotalUsers] = useState(0)
+    const [count, setCount] = useState(0);
     const navData = [
         { icon: FaFireAlt, title: "Click", link: "/" },
         { icon: SiGoogletasks, title: "Airdrop", link: "/airdrop" },
@@ -81,6 +85,20 @@ const Stats = () => {
         fetchUsers()
       }, [])
 
+      useEffect(() => {
+        const fetchBalance = async () => {
+            try {
+                const res = await axios.get(`/api/getTapDetailsByUserId`, { userId });
+                if (res.data.success) {
+                  setCount(res.data.data.tapBalance);
+                }
+              } catch (error) {
+                console.error('Error fetching balance:', error);
+              }
+            }
+        fetchBalance()
+      }, [userId])
+
     return(
         <div className={`overflow-hidden h-screen bg-[#1d1d1d] ${poppins.className} text-white`}>
             <div className="mb-8 pt-8">
@@ -95,7 +113,7 @@ const Stats = () => {
             <h1 className="pl-4">Statistics</h1>
             <div className="coin border text-white border-[#1d1d1d] bg-[#282828] w-11/12 mx-auto px-2 pt-3 pb-4 mt-4 rounded-md">
                 <h1 className="pl-4 pb-2">Total share balance:</h1>
-                <h1 className="flex pl-4 text-4xl font-bold"><Image src={"/coin.svg"} height={40} width={40} className="mr-1" alt='done' /> 6122</h1>
+                <h1 className="flex pl-4 text-4xl font-bold"><Image src={"/coin.svg"} height={40} width={40} className="mr-1" alt='done' />{count}</h1>
             </div>
             </div>
             <div className="images mb-6 flex justify-center gap-2">
