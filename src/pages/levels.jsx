@@ -263,7 +263,8 @@ const Dash = () => {
           </div>
         )}
         <Flex
-            position="fixed"
+            key={location.pathname}
+            position="absolute"
             bottom={0}
             left={0}
             right={0}
