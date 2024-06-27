@@ -16,6 +16,18 @@ const Boost = () => {
     const { userId } = router.query;
     const [count, setCount] = useState(0);
     const [userDetails, setUserDetails] = useState(null);
+    const [insufficientBalance, setInsufficientBalance] = useState(false);
+    const [showError, setShowError] = useState(false);
+
+    useEffect(() => {
+        if (insufficientBalance) {
+          setShowError(true);
+          setTimeout(() => {
+            setShowError(false);
+          }, 2000); // 3 seconds
+        }
+      }, [insufficientBalance]);
+
 
     useEffect(() => {
         const fetchBalance = async() => {
@@ -50,6 +62,34 @@ const Boost = () => {
     
         getLevel()
       }, [userId])
+
+      const handleBuyBoost = async () => {
+        if (!userId || !userDetails) return;
+    
+        let levelCost = 2000;
+    
+        if (count >= levelCost) {
+          try {
+            setCount(count - levelCost);
+    
+            const res = await axios.post(`/api/deductBalance`, {
+              userId,
+              amount: levelCost,
+            });
+    
+            if (res.data.success) {
+              console.log("done, deducting")
+            } else {
+              console.error('Failed to deduct balance:', res.data.message);
+            }
+          } catch (error) {
+            console.error('Error buying level:', error);
+          }
+        } else {
+          setInsufficientBalance(true);
+        }
+      };
+
 
 
   return (
@@ -98,7 +138,7 @@ const Boost = () => {
                 <div className="flex mb-2 justify-between border py-2 rounded-md px-2 w-11/12 mx-auto border-[#1d1d1d] bg-[#282828]">
                     <div className="first flex">
                        <Image src={"/click.svg"} width={22} height={22} className="mr-2" />
-                       <div>
+                       <div onClick={handleBuyBoost}>
                             <p className="text-sm">Multitap</p>
                             <p className="flex text-sm"><Image src={"/coin.svg"} width={18} height={18} className="mr-1" />200 | Level 1</p>
                        </div>
@@ -147,6 +187,15 @@ const Boost = () => {
                 </div>
             </div>
         </div>
+        {showError && (
+            <div
+              className="fixed top-0  w-full h-6/12 flex items-center justify-center bg-[#1d1d1d]"
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.5 }}
+            >
+              <div className="text-lg font-light text-red-400">Insufficient Balance</div>
+            </div>
+        )}
     </div>
   )
 }
