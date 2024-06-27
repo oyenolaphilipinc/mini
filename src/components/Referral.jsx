@@ -62,12 +62,12 @@ const Referral = () => {
                     )}
                 <div>
                     <p className="pl-4 pb-4 pt-8">My referral link:</p>
-                    {userDetails && (
                     <div className="border px-2 py-2 w-11/12 border-[#1d1d1d] bg-[#282828] mx-auto flex justify-between rounded-md">
+                    {userDetails && (
                         <p className="text-gray-400 pt-2 pl-2">{truncateLink(userDetails.referralLink, maxLength)}</p>
+                    )}
                         <button className="flex border border-[#282828] px-2 py-2 bg-[#fbc347] rounded-md mr-1 text-black"><Image src={"/clip.svg"} width={18} height={18} className="mr-1" />Copy</button>
                     </div>
-                    )}
                     
                     <p className="pt-1 pl-4 text-gray-400 pb-12">How referral levels work? <Link href={"/reflevel"} className="text-[#fbc347] underline">Check</Link></p>
                 </div>

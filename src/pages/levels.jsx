@@ -26,6 +26,7 @@ import {
 import { Poppins } from "next/font/google";
 import axios from "axios";
 import { useRouter } from "next/router"
+import { IoCloseCircle } from "react-icons/io5";
   
 const poppins = Poppins({
   subsets: ["latin"],
@@ -50,6 +51,8 @@ const Dash = () => {
     const { userId } = router.query;
     const [count, setCount] = useState(0);
     const [userDetails, setUserDetails] = useState(null);
+    const [insufficientBalance, setInsufficientBalance] = useState(false);
+    const [showError, setShowError] = useState(false);
     const [activeLink, setActiveLink] = useState("/");
         const navData = [
         { icon: FaFireAlt, title: "Click", link: `/?userId=${userId}` },
@@ -61,6 +64,15 @@ const Dash = () => {
       const handleNavClick = (link) => {
         setActiveLink(link);
       };
+
+      useEffect(() => {
+        if (insufficientBalance) {
+          setShowError(true);
+          setTimeout(() => {
+            setShowError(false);
+          }, 2000); // 3 seconds
+        }
+      }, [insufficientBalance]);
 
       useEffect(() => {
         const fetchBalance = async () => {
@@ -95,6 +107,74 @@ const Dash = () => {
         getLevel()
       }, [userId])
 
+      const handleBuyLevel = async (level) => {
+        if (!userId || !userDetails) return;
+    
+        let levelCost;
+
+        switch (level) {
+          case 1:
+            levelCost = 10000; // Level 1 costs 10 tapBalance
+            break;
+          case 2:
+            levelCost = 20000; // Level 2 costs 20 tapBalance
+            break;
+          case 3:
+            levelCost = 30000; // Level 3 costs 30 tapBalance
+            break;
+          case 4:
+            levelCost = 40000; // Level 4 costs 40 tapBalance
+            break;
+          case 5:
+            levelCost = 50000; // Level 5 costs 50 tapBalance
+            break;
+          case 6:
+            levelCost = 60000; // Level 6 costs 60 tapBalance
+            break;
+          case 7:
+            levelCost = 70000; // Level 7 costs 70 tapBalance
+            break;
+          default:
+            console.error(`Invalid level: ${level}`);
+            return;
+        }
+    
+        if (count >= levelCost) {
+          try {
+            setCount(count - levelCost);
+    
+            const res = await axios.post(`/api/deductBalance`, {
+              userId,
+              amount: levelCost,
+            });
+    
+            if (res.data.success) {
+              await triggerLevelUp();
+            } else {
+              console.error('Failed to deduct balance:', res.data.message);
+            }
+          } catch (error) {
+            console.error('Error buying level:', error);
+          }
+        } else {
+          setInsufficientBalance(true);
+        }
+      };
+
+      const triggerLevelUp = async () => {
+        try {
+          const res = await axios.post(`/api/levelUp`, { userId });
+    
+          if (res.data.success) {
+            setUserDetails(res.data.data);
+          } else {
+            console.error('Failed to level up:', res.data.message);
+          }
+        } catch (error) {
+          console.error('Error triggering level up:', error);
+        }
+      };
+
   return (
     <div className={`bg-[#1d1d1d] h-screen ${poppins.className} overflow-hidden text-white`}>
         <div className="mb-8 pt-8">
@@ -115,21 +195,11 @@ const Dash = () => {
             </div>
             <div className="hello border flex justify-between bg-[#282828] border-[#1d1d1d] w-11/12 mx-auto px-2 py-2 rounded-md mb-3">
                 <div className="pl-2">
-                    <p className="text-sm">Level 1</p>
-                    <p className="flex gap-1 text-sm text-gray-400"><span className="flex text-[#fbc347]"><Image src={"/coin.svg"} width={20} height={20} />+1 SC</span>tokens earned</p>
-                </div>
-                <div className="button flex">
-                    <button className="text-[#fbc347] border px-3 py-1 border-[#fbc347] rounded-md mr-1">Buy</button>
-                    <button className="text-black border px-3 py-1 border-[#282828] bg-[#fbc347] rounded-md">Claim</button>
-                </div>
-            </div>
-            <div className="hello border flex justify-between bg-[#282828] border-[#1d1d1d] w-11/12 mx-auto px-2 py-2 rounded-md mb-3">
-                <div className="pl-2">
                     <p className="text-sm">Level 2</p>
-                    <p className="flex gap-1 text-sm text-gray-400"><span className="flex text-[#fbc347]"><Image src={"/coin.svg"} width={20} height={20} alt='coin' />+2 SC</span>tokens earned</p>
+                    <p className="flex gap-1 text-sm text-gray-400"><span className="flex text-[#fbc347]"><Image src={"/coin.svg"} width={20} height={20} />+2 SC</span>tokens earned</p>
                 </div>
                 <div className="button flex">
-                    <button className="text-[#fbc347] border px-3 py-1 border-[#fbc347] rounded-md mr-1">Buy</button>
+                    <button className="text-[#fbc347] border px-3 py-1 border-[#fbc347] rounded-md mr-1" onClick={() => handleBuyLevel(1)}>Buy</button>
                     <button className="text-black border px-3 py-1 border-[#282828] bg-[#fbc347] rounded-md">Claim</button>
                 </div>
             </div>
@@ -183,7 +253,27 @@ const Dash = () => {
                     <button className="text-black border px-3 py-1 border-[#282828] bg-[#fbc347] rounded-md">Claim</button>
                 </div>
             </div>
+            <div className="hello border flex justify-between bg-[#282828] border-[#1d1d1d] w-11/12 mx-auto px-2 py-2 rounded-md mb-3">
+                <div className="pl-2">
+                    <p className="text-sm">Level 8</p>
+                    <p className="flex gap-1 text-sm text-gray-400"><span className="flex text-[#fbc347]"><Image src={"/coin.svg"} width={20} height={20} alt='coin' />+8 SC</span>tokens earned</p>
+                </div>
+                <div className="button flex">
+                    <button className="text-[#fbc347] border px-3 py-1 border-[#fbc347] rounded-md mr-1" disabled={true}>Buy</button>
+                    <button className="text-black border px-3 py-1 border-[#282828] bg-[#fbc347] rounded-md">Claim</button>
+                </div>
+            </div>
         </div>
+        {showError && (
+          <div
+            className="fixed top-0  w-full h-6/12 flex items-center justify-center bg-[#1d1d1d]"
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.5 }}
+          >
+            <IoCloseCircle className='mr-1 text-red-500'/>
+            <div className="text-md font-light text-red-400">Insufficient Balance</div>
+          </div>
+        )}
         <Flex
             position="fixed"
             bottom={0}

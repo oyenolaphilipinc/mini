@@ -170,8 +170,8 @@ import debounce from "lodash.debounce";
   
     return (
       <>
-        <div className={`bg-[#1d1d1d] h-screen ${poppins.className} overflow-hidden`}>
-        <div className="pt-16"></div>
+        <div className={`bg-[#1d1d1d] h-full min-h-screen ${poppins.className}`}>
+        <div className="pt-6"></div>
           <div className="text-center text-white pt-4">
             <p className="flex justify-center text-5xl font-bold pb-3"><Image src={"/coin.svg"} width={50} height={50} className="mr-1" />{count}</p>
             <p className="text-md font-normal flex justify-center">
