@@ -86,7 +86,7 @@ const airdrop = () => {
       useEffect(() => {
         const fetchBalance = async () => {
             try {
-                const res = await axios.get(`/api/getTapDetailsByUserId`, { userId });
+                const res = await axios.get(`/api/getTapDetailsByUserId?userId=${userId}`);
                 if (res.data.success) {
                   setCount(res.data.data.tapBalance);
                 }
@@ -98,7 +98,7 @@ const airdrop = () => {
 
         const getLevel = async () => {
           try{
-              const response = await axios.get("/api/getTapDetailsByUserId", { userId });
+              const response = await axios.get(`/api/getTapDetailsByUserId?userId=${userId}`);
               if (response.data.success) {
                   setUserDetails(response.data.data);
               } else {
@@ -115,14 +115,6 @@ const airdrop = () => {
   return (
     <div className={`bg-[#1d1d1d] h-screen ${poppins.className} overflow-hidden`}>
         <div className="mb-8 pt-8 border-b rounded-md pb-4 border-[#fbce47] shadow-lg">
-            {/* <div className="flex justify-between">
-            <div className="text-white pl-6">
-                <h1 className="flex text-xl text-semibold"><IoMdClose className="w-8 h-8 mr-2" /> Minipanda</h1>
-            </div>
-            <div className="mr-4 text-white">
-                <BsThreeDotsVertical className="w-7 h-7" />
-            </div>
-            </div> */}
             <div className="coin border flex justify-between text-white border-[#1d1d1d] bg-[#282828] w-11/12 mx-auto px-2 py-2 mt-4 rounded-md">
                 <h1 className="flex pl-4 text-4xl font-bold"><Image src={"/coin.svg"} height={40} width={40} className="mr-1" />{count}</h1>
                 <div className="pr-6">

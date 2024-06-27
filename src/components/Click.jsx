@@ -101,7 +101,9 @@ import debounce from "lodash.debounce";
 
     const updateEnergy = async(amount) => {
       try{
+        console.log(`Updating energy for user ${userId} with amount ${amount}`);
         const res = await axios.post('/api/updateEnergyLevel', { userId, amount: amount});
+
         console.log(res);
       } catch(error){
         console.error('Error updating balance:', error)
