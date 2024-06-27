@@ -51,14 +51,13 @@ const Dash = () => {
     const [count, setCount] = useState(0);
     const [userDetails, setUserDetails] = useState(null);
     const [activeLink, setActiveLink] = useState("/");
-    const navData = [
-        { icon: FaFireAlt, title: "Click", link: "/" },
-        { icon: SiGoogletasks, title: "Airdrop", link: "/airdrop" },
-        { icon: MdSpaceDashboard, title: "Levels", link: "/levels" },
-        { icon: IoMdStats , title: "Stats", link: "/stats" },
-        { icon: MdGroups, title: "Invites", link: "/invites" },
+        const navData = [
+        { icon: FaFireAlt, title: "Click", link: `/?userId=${userId}` },
+        { icon: SiGoogletasks, title: "Airdrop", link: `/airdrop?userId=${userId}` },
+        { icon: MdSpaceDashboard, title: "Levels", link: `/levels?userId=${userId}` },
+        { icon: IoMdStats , title: "Stats", link: `/stats?userId=${userId}` },
+        { icon: MdGroups, title: "Invites", link: `/invites?userId=${userId}` },
       ];
-    
       const handleNavClick = (link) => {
         setActiveLink(link);
       };
