@@ -19,15 +19,6 @@ const Boost = () => {
     const [insufficientBalance, setInsufficientBalance] = useState(false);
     const [showError, setShowError] = useState(false);
 
-    useEffect(() => {
-        if (insufficientBalance) {
-          setShowError(true);
-          setTimeout(() => {
-            setShowError(false);
-          }, 2000); // 3 seconds
-        }
-      }, [insufficientBalance]);
-
 
     useEffect(() => {
         const fetchBalance = async() => {
@@ -87,6 +78,10 @@ const Boost = () => {
           }
         } else {
           setInsufficientBalance(true);
+          setShowError(true);
+          setTimeout(() => {
+            setShowError(false);
+          }, 2000); // 3 seconds
         }
       };
 
