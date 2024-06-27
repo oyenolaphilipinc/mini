@@ -39,7 +39,7 @@ const Referral = () => {
         return `${link.substring(0, maxLength)}...`;
     };
 
-    const maxLength = 30;
+    const maxLength = 20;
     
     return(
         <div className={`overflow-hidden h-screen bg-[#1d1d1d] ${inter.className} text-white`}>
