@@ -56,6 +56,7 @@ import debounce from "lodash.debounce";
     const router = useRouter();
     const [isScaled, setIsScaled] = useState(false);
     const [count, setCount] = useState(0);
+    const [tapEnergy, setTapEnergy] = useState(750);
     const [showOne, setShowOne] = useState(false);
     const [activeLink, setActiveLink] = useState("/click");
 
@@ -79,6 +80,39 @@ import debounce from "lodash.debounce";
       fetchBalance();
     }, [userId])
 
+    const fetchEnergy = async() => {
+      if(!userId) return;
+        try {
+          const res = await axios.get(`/api/getTapDetailsByUserId?userId=${userId}`);
+          if (res.data.success) {
+            setTapEnergy(res.data.data.tapEnergy);
+          }
+        } catch (error) {
+          console.error('Error fetching balance:', error);
+        }
+      }
+
+    useEffect(() => {
+      
+  
+      fetchEnergy();
+    }, [userId])
+
+
+    const updateEnergy = async(amount) => {
+      try{
+        const res = await axios.post('/api/updateEnergyLevel', { userId, amount: amount});
+        console.log(res);
+      } catch(error){
+        console.error('Error updating balance:', error)
+      }
+    };
+
+    const debounceUpdateEnergy = useCallback(
+      debounce((amount) => updateEnergy(amount), 100),
+      []
+    );
+
     const updateBalance = async (amount) => {
       try {
         const res = await axios.post('/api/updateBalance', { userId, amount: amount });
@@ -93,8 +127,13 @@ import debounce from "lodash.debounce";
     []
   );
 
+
+
+
+
   const handleImageClick = () => {
     setCount((prevCount) => prevCount + 1);
+    setTapEnergy((prevCount) => prevCount - 1)
     setShowOne(true);
     setIsScaled(true);
     setTimeout(() => {
@@ -108,6 +147,12 @@ import debounce from "lodash.debounce";
       debouncedUpdateBalance(count);
     }
   }, [count, userId, debouncedUpdateBalance]);
+
+  useEffect(() => {
+    if(userId !== null){
+      debounceUpdateEnergy(tapEnergy);
+    }
+  }, [tapEnergy, userId, debounceUpdateEnergy])
 
     const navData = [
       { icon: FaFireAlt, title: "Click", link: "http://localhost:3000?userId=2146305061" },
@@ -129,7 +174,7 @@ import debounce from "lodash.debounce";
             <p className="flex justify-center text-5xl font-bold pb-3"><Image src={"/coin.svg"} width={50} height={50} className="mr-1" />{count}</p>
             <p className="text-md font-normal flex justify-center">
              <Image src={"/speedometer.svg"} width={20} height={20} className="mr-1" /> 
-             {tapDetails ? `${tapDetails.tapEnergy} /  ${tapDetails.tapEnergy}`: '0/0'}
+             {tapEnergy} / 750
             </p>
             <div
               className={`pt-12 transition-transform transform ${isScaled && "scale-75"} mb-16`}

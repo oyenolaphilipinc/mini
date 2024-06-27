@@ -4,6 +4,7 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import { Poppins } from "next/font/google";
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+import axios from "axios";
   
   const poppins = Poppins({
     subsets: ["latin"],
@@ -26,11 +27,13 @@ const Boost = () => {
     const router = useRouter();
     const { userId } = router.query;
     const [count, setCount] = useState(0);
+    const [userDetails, setUserDetails] = useState(null);
 
     useEffect(() => {
         const fetchBalance = async() => {
+            if(!userId) return;
           try {
-            const res = await axios.get(`/api/getTapDetailsByUserId`, { userId });
+            const res = await axios.get(`/api/getTapDetailsByUserId?userId=${userId}`);
             if (res.data.success) {
               setCount(res.data.data.tapBalance);
             }
@@ -41,6 +44,26 @@ const Boost = () => {
     
         fetchBalance();
       }, [userId])
+
+      useEffect(() => {
+        const getLevel = async () => {
+            if(!userId) return;
+            try{
+                const response = await axios.get(`/api/getTapDetailsByUserId?userId=${userId}`);
+                if (response.data.success) {
+                    setUserDetails(response.data.data);
+                } else {
+                    setError('User not found');
+                }
+            } catch(error){
+                console.error("Error fetching data", error);
+            }
+        };
+    
+        getLevel()
+      }, [userId])
+
+
   return (
     <div className={`bg-[#1d1d1d] h-screen ${poppins.className} text-white`}>
         <div className="mb-8 pt-8 border-b rounded-md pb-4 border-[#fbce47]">
@@ -56,7 +79,9 @@ const Boost = () => {
             <h1 className="flex pl-4 text-4xl font-bold"><Image src={"/coin.svg"} height={40} width={40} className="mr-1" />{count}</h1>
             <div className="pr-6">
                 <p className="text-sm font-normal">Level</p>
-                <p className="text-sm font-semibold">1</p>
+                {userDetails && (
+                    <p className="text-sm font-semibold">{userDetails.level}</p>
+                )}
             </div>
         </div>
         </div>
