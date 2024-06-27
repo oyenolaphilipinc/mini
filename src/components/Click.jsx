@@ -155,12 +155,12 @@ import debounce from "lodash.debounce";
   }, [tapEnergy, userId, debounceUpdateEnergy])
 
     const navData = [
-      { icon: FaFireAlt, title: "Click", link: "http://localhost:3000?userId=2146305061" },
-      { icon: SiGoogletasks, title: "Airdrop", link: "/airdrop" },
-      { icon: MdSpaceDashboard, title: "Levels", link: "/levels" },
-      { icon: IoMdStats , title: "Stats", link: "/stats" },
-      { icon: MdGroups, title: "Invites", link: "/invites" },
-    ];
+        { icon: FaFireAlt, title: "Click", link: `/?userId=${userId}` },
+        { icon: SiGoogletasks, title: "Airdrop", link: `/airdrop?userId=${userId}` },
+        { icon: MdSpaceDashboard, title: "Levels", link: `/levels?userId=${userId}` },
+        { icon: IoMdStats , title: "Stats", link: `/stats?userId=${userId}` },
+        { icon: MdGroups, title: "Invites", link: `/invites?userId=${userId}` },
+      ];
   
     const handleNavClick = (link) => {
       setActiveLink(link);
