@@ -21,7 +21,7 @@ const Navigation = ({ userId }) => {
 
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-[#282828] text-white p-3 flex justify-around z-10 lg:hidden">
+    <div className="fixed bottom-0 left-0 right-0 bg-[#282828] text-white p-1 flex justify-around z-10 lg:hidden">
       {navData.map((item) => (
         <Link key={item.title} href={item.link} passHref className={`flex flex-col items-center ${
             activeLink === item.link ? 'border rounded-md px-2 py-1 border-[#282828] bg-[#423c2c]' : ''
