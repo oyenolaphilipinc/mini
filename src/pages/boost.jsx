@@ -5,6 +5,7 @@ import { Inter } from 'next/font/google';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import axios from "axios";
+import { toast } from 'react-hot-toast';
   
 const inter = Inter({
     subsets: ['latin'],
@@ -69,19 +70,17 @@ const Boost = () => {
             });
     
             if (res.data.success) {
-              console.log("done, deducting")
+              toast.success("Purchased Successfully")
             } else {
               console.error('Failed to deduct balance:', res.data.message);
             }
           } catch (error) {
-            console.error('Error buying level:', error);
+            console.error('Error purchasing:', error);
+            toast.error("Error purchasing:", error)
           }
         } else {
           setInsufficientBalance(true);
-          setShowError(true);
-          setTimeout(() => {
-            setShowError(false);
-          }, 2000); // 3 seconds
+          toast.error('Insufficient Balance');
         }
       };
 
@@ -182,15 +181,6 @@ const Boost = () => {
                 </div>
             </div>
         </div>
-        {showError && (
-            <div
-              className="fixed top-0  w-full h-6/12 flex items-center justify-center bg-[#1d1d1d]"
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ duration: 0.5 }}
-            >
-              <div className="text-lg font-light text-red-400">Insufficient Balance</div>
-            </div>
-        )}
     </div>
   )
 }
