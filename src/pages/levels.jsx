@@ -23,27 +23,15 @@ import {
   import NextLink from "next/link";
   import Image from "next/image";
   import { BsThreeDotsVertical } from "react-icons/bs";
-import { Poppins } from "next/font/google";
+import { Inter } from "next/font/google";
 import axios from "axios";
 import { useRouter } from "next/router"
 import { IoCloseCircle } from "react-icons/io5";
   
-const poppins = Poppins({
-  subsets: ["latin"],
-  display: "swap",
-  variable: "--font-poppins",
-  weight: [
-    "100",
-    "200",
-    "300",
-    "400",
-    "500",
-    "600",
-    "700",
-    "800",
-    "900",
-  ],
-});
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-inter',
+})
 
 
 const Dash = () => {
@@ -176,7 +164,7 @@ const Dash = () => {
       };
 
   return (
-    <div className={`bg-[#1d1d1d] h-screen ${poppins.className} overflow-hidden text-white`}>
+    <div className={`bg-[#1d1d1d] h-screen ${inter.className} overflow-hidden text-white`}>
         <div className="mb-8 pt-8">
             <div className="coin border flex justify-between text-white border-[#1d1d1d] bg-[#282828] w-11/12 mx-auto px-2 py-2 mt-4 rounded-md">
                 <h1 className="flex pl-4 text-4xl font-bold"><Image src={"/coin.svg"} height={40} width={40} alt='coin' className="mr-1" />{count}</h1>
@@ -198,7 +186,7 @@ const Dash = () => {
                     <p className="text-sm">Level 2</p>
                     <p className="flex gap-1 text-sm text-gray-400"><span className="flex text-[#fbc347]"><Image src={"/coin.svg"} width={20} height={20} />+2 SC</span>tokens earned</p>
                 </div>
-                <div className="button flex">
+                <div className="button flex gap-2">
                     <button className="text-[#fbc347] border px-3 py-1 border-[#fbc347] rounded-md mr-1" onClick={() => handleBuyLevel(1)}>Buy</button>
                     <button className="text-black border px-3 py-1 border-[#282828] bg-[#fbc347] rounded-md">Claim</button>
                 </div>
@@ -208,7 +196,7 @@ const Dash = () => {
                     <p className="text-sm">Level 3</p>
                     <p className="flex gap-1 text-sm text-gray-400"><span className="flex text-[#fbc347]"><Image src={"/coin.svg"} width={20} height={20} alt='coin' />+3 SC</span>tokens earned</p>
                 </div>
-                <div className="button flex">
+                <div className="button flex gap-2">
                     <button className="text-[#fbc347] border px-3 py-1 border-[#fbc347] rounded-md mr-1">Buy</button>
                     <button className="text-black border px-3 py-1 border-[#282828] bg-[#fbc347] rounded-md">Claim</button>
                 </div>
@@ -218,7 +206,7 @@ const Dash = () => {
                     <p className="text-sm">Level 4</p>
                     <p className="flex gap-1 text-sm text-gray-400"><span className="flex text-[#fbc347]"><Image src={"/coin.svg"} width={20} height={20} alt='coin' />+4 SC</span>tokens earned</p>
                 </div>
-                <div className="button flex">
+                <div className="button flex gap-2">
                     <button className="text-[#fbc347] border px-3 py-1 border-[#fbc347] rounded-md mr-1">Buy</button>
                     <button className="text-black border px-3 py-1 border-[#282828] bg-[#fbc347] rounded-md">Claim</button>
                 </div>
@@ -228,7 +216,7 @@ const Dash = () => {
                     <p className="text-sm">Level 5</p>
                     <p className="flex gap-1 text-sm text-gray-400"><span className="flex text-[#fbc347]"><Image src={"/coin.svg"} width={20} height={20} alt='coin' />+5 SC</span>tokens earned</p>
                 </div>
-                <div className="button flex">
+                <div className="button flex gap-2">
                     <button className="text-[#fbc347] border px-3 py-1 border-[#fbc347] rounded-md mr-1">Buy</button>
                     <button className="text-black border px-3 py-1 border-[#282828] bg-[#fbc347] rounded-md">Claim</button>
                 </div>
@@ -238,7 +226,7 @@ const Dash = () => {
                     <p className="text-sm">Level 6</p>
                     <p className="flex gap-1 text-sm text-gray-400"><span className="flex text-[#fbc347]"><Image src={"/coin.svg"} width={20} height={20} alt='coin' />+6 SC</span>tokens earned</p>
                 </div>
-                <div className="button flex">
+                <div className="button flex gap-2">
                     <button className="text-[#fbc347] border px-3 py-1 border-[#fbc347] rounded-md mr-1">Buy</button>
                     <button className="text-black border px-3 py-1 border-[#282828] bg-[#fbc347] rounded-md">Claim</button>
                 </div>
@@ -248,7 +236,7 @@ const Dash = () => {
                     <p className="text-sm">Level 7</p>
                     <p className="flex gap-1 text-sm text-gray-400"><span className="flex text-[#fbc347]"><Image src={"/coin.svg"} width={20} height={20} alt='coin' />+7 SC</span>tokens earned</p>
                 </div>
-                <div className="button flex">
+                <div className="button flex gap-2">
                     <button className="text-[#fbc347] border px-3 py-1 border-[#fbc347] rounded-md mr-1">Buy</button>
                     <button className="text-black border px-3 py-1 border-[#282828] bg-[#fbc347] rounded-md">Claim</button>
                 </div>
@@ -258,7 +246,7 @@ const Dash = () => {
                     <p className="text-sm">Level 8</p>
                     <p className="flex gap-1 text-sm text-gray-400"><span className="flex text-[#fbc347]"><Image src={"/coin.svg"} width={20} height={20} alt='coin' />+8 SC</span>tokens earned</p>
                 </div>
-                <div className="button flex">
+                <div className="button flex gap-2">
                     <button className="text-[#fbc347] border px-3 py-1 border-[#fbc347] rounded-md mr-1" disabled={true}>Buy</button>
                     <button className="text-black border px-3 py-1 border-[#282828] bg-[#fbc347] rounded-md">Claim</button>
                 </div>

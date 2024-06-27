@@ -1,27 +1,15 @@
 import React from "react";
-import { Poppins } from "next/font/google";
+import { Inter } from "next/font/google";
 import Image from "next/image";
 
-const poppins = Poppins({
-    subsets: ["latin"],
-    display: "swap",
-    variable: "--font-poppins",
-    weight: [
-      "100",
-      "200",
-      "300",
-      "400",
-      "500",
-      "600",
-      "700",
-      "800",
-      "900",
-    ],
-  });
+const inter = Inter({
+    subsets: ['latin'],
+    variable: '--font-inter',
+  })
 
 const RefLevel = () => {
     return(
-        <div className={`bg-[#1d1d1d] h-screen ${poppins.className} text-white`}>
+        <div className={`bg-[#1d1d1d] h-screen ${inter.className} text-white`}>
             <div className="pt-48">
             <div className="border border-[#1d1d1d] bg-[#282828] w-11/12 mx-auto px-3 py-2 rounded-md">
                 <div className="test pt-4 pb-6 flex justify-between">

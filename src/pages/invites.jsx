@@ -27,26 +27,14 @@ import {
   import { IoMdClose } from "react-icons/io";
   import { BsThreeDotsVertical } from "react-icons/bs";
   import { FaFire } from "react-icons/fa";
-  import { Poppins } from "next/font/google";
+  import { Inter } from "next/font/google";
 import Link from "next/link";
 import { useRouter } from "next/router";
   
-  const poppins = Poppins({
-    subsets: ["latin"],
-    display: "swap",
-    variable: "--font-poppins",
-    weight: [
-      "100",
-      "200",
-      "300",
-      "400",
-      "500",
-      "600",
-      "700",
-      "800",
-      "900",
-    ],
-  });
+const inter = Inter({
+    subsets: ['latin'],
+    variable: '--font-inter',
+  })
 
 const Invites = () => {
     const [activeLink, setActiveLink] = useState("/invites");
@@ -68,7 +56,7 @@ const Invites = () => {
       };
 
     return(
-        <div className={`bg-[#1d1d1d] h-screen ${poppins.className} overflow-hidden text-white`}>
+        <div className={`bg-[#1d1d1d] h-screen ${inter.className} overflow-hidden text-white`}>
         <div className="mb-8 pt-8">
             {/* <div className="flex justify-between">
             <div className="text-white pl-6">

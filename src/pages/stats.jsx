@@ -23,27 +23,17 @@ import {
   import NextLink from "next/link";
   import Image from "next/image";
   import { BsThreeDotsVertical } from "react-icons/bs";
-import { Poppins } from "next/font/google";
 import BarChart from '@/components/Chart';
 import axios from "axios";
 import { useRouter } from 'next/router';
+import { Inter } from "next/font/google";
+
+
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-inter',
+})
   
-const poppins = Poppins({
-  subsets: ["latin"],
-  display: "swap",
-  variable: "--font-poppins",
-  weight: [
-    "100",
-    "200",
-    "300",
-    "400",
-    "500",
-    "600",
-    "700",
-    "800",
-    "900",
-  ],
-});
 
 
 const Stats = () => {
@@ -101,7 +91,7 @@ const Stats = () => {
       }, [userId])
 
     return(
-        <div className={`h-full min-h-screen bg-[#1d1d1d] ${poppins.className} text-white`}>
+        <div className={`h-full min-h-screen bg-[#1d1d1d] ${inter.className} text-white`}>
             <div className="mb-8 pt-8">
             <h1 className="pl-4">Statistics</h1>
             <div className="coin border text-white border-[#1d1d1d] bg-[#282828] w-11/12 mx-auto px-2 pt-3 pb-4 mt-4 rounded-md">

@@ -27,30 +27,18 @@ import {
   import { IoMdClose } from "react-icons/io";
   import { BsThreeDotsVertical } from "react-icons/bs";
   import { FaFire } from "react-icons/fa";
-  import { Poppins } from "next/font/google";
 import Link from "next/link";
+import { Inter } from "next/font/google";
 import Referral from "@/components/Referral";
 import axios from "axios";
 import { useRouter } from "next/router";
 import debounce from "lodash.debounce";
 
   
-  const poppins = Poppins({
-    subsets: ["latin"],
-    display: "swap",
-    variable: "--font-poppins",
-    weight: [
-      "100",
-      "200",
-      "300",
-      "400",
-      "500",
-      "600",
-      "700",
-      "800",
-      "900",
-    ],
-  });
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-inter',
+})
   
   const Click = ({userId, tapDetails}) => {
     const router = useRouter();
@@ -170,7 +158,7 @@ import debounce from "lodash.debounce";
   
     return (
       <>
-        <div className={`bg-[#1d1d1d] h-full min-h-screen ${poppins.className}`}>
+        <div className={`bg-[#1d1d1d] h-full min-h-screen ${inter.className}`}>
         <div className="pt-6"></div>
           <div className="text-center text-white pt-4">
             <p className="flex justify-center text-5xl font-bold pb-3"><Image src={"/coin.svg"} width={50} height={50} className="mr-1" />{count}</p>

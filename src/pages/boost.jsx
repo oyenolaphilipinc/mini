@@ -1,27 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { IoMdClose } from "react-icons/io";
 import { BsThreeDotsVertical } from "react-icons/bs";
-import { Poppins } from "next/font/google";
+import { Inter } from 'next/font/google';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import axios from "axios";
   
-  const poppins = Poppins({
-    subsets: ["latin"],
-    display: "swap",
-    variable: "--font-poppins",
-    weight: [
-      "100",
-      "200",
-      "300",
-      "400",
-      "500",
-      "600",
-      "700",
-      "800",
-      "900",
-    ],
-  });
+const inter = Inter({
+    subsets: ['latin'],
+    variable: '--font-inter',
+  })
 
 const Boost = () => {
     const router = useRouter();
@@ -65,7 +53,7 @@ const Boost = () => {
 
 
   return (
-    <div className={`bg-[#1d1d1d] h-screen ${poppins.className} text-white`}>
+    <div className={`bg-[#1d1d1d] h-screen ${inter.className} text-white`}>
         <div className="mb-8 pt-8 border-b rounded-md pb-4 border-[#fbce47]">
         <div className="flex justify-between">
         <div className="text-white pl-6">

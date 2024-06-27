@@ -1,26 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { Poppins } from "next/font/google";
 import Image from "next/image";
 import Link from "next/link";
 import axios from "axios";
 import { useRouter } from "next/router";
-  
-const poppins = Poppins({
-  subsets: ["latin"],
-  display: "swap",
-  variable: "--font-poppins",
-  weight: [
-    "100",
-    "200",
-    "300",
-    "400",
-    "500",
-    "600",
-    "700",
-    "800",
-    "900",
-  ],
-});
+import { Inter } from 'next/font/google'
+
+const inter = Inter({
+    subsets: ['latin'],
+    variable: '--font-inter',
+  })
 
 const Referral = () => {
     const router = useRouter();
@@ -51,10 +39,10 @@ const Referral = () => {
         return `${link.substring(0, maxLength)}...`;
     };
 
-    const maxLength = 20;
+    const maxLength = 30;
     
     return(
-        <div className={`overflow-hidden h-screen bg-[#1d1d1d] ${poppins.className} text-white`}>
+        <div className={`overflow-hidden h-screen bg-[#1d1d1d] ${inter.className} text-white`}>
             
                 <div>
                     {userDetails && (
@@ -64,9 +52,9 @@ const Referral = () => {
                     <p className="pl-4 pb-4 pt-8">My referral link:</p>
                     <div className="border px-2 py-2 w-11/12 border-[#1d1d1d] bg-[#282828] mx-auto flex justify-between rounded-md">
                     {userDetails && (
-                        <p className="text-gray-400 pt-2 pl-2">{truncateLink(userDetails.referralLink, maxLength)}</p>
+                        <p className="text-gray-400 pt-2 pl-2">{userDetails.referralLink ? truncateLink(userDetails.referralLink, maxLength) : 'https://t.me/panda_bot/123'}</p>
                     )}
-                        <button className="flex border border-[#282828] px-2 py-2 bg-[#fbc347] rounded-md mr-1 text-black"><Image src={"/clip.svg"} width={18} height={18} className="mr-1" />Copy</button>
+                        <button className="flex border border-[#282828] px-2 py-2 bg-[#fbc347] rounded-md mr-1 text-black"><Image src={"/clip.svg"} width={18} height={18} className="mr-1 mt-1" />Copy</button>
                     </div>
                     
                     <p className="pt-1 pl-4 text-gray-400 pb-12">How referral levels work? <Link href={"/reflevel"} className="text-[#fbc347] underline">Check</Link></p>
