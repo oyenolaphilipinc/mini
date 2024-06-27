@@ -130,10 +130,10 @@ const Boost = () => {
         <div className="boosters">
             <h1 className='pl-4 pb-4'>Boosters:</h1>
             <div className="boooose">
-                <div className="flex mb-2 justify-between border py-2 rounded-md px-2 w-11/12 mx-auto border-[#1d1d1d] bg-[#282828]">
+                <div className="flex mb-2 justify-between border py-2 rounded-md px-2 w-11/12 mx-auto border-[#1d1d1d] bg-[#282828]" onClick={handleBuyBoost}>
                     <div className="first flex">
                        <Image src={"/click.svg"} width={22} height={22} className="mr-2" />
-                       <div onClick={handleBuyBoost}>
+                       <div>
                             <p className="text-sm">Multitap</p>
                             <p className="flex text-sm"><Image src={"/coin.svg"} width={18} height={18} className="mr-1" />200 | Level 1</p>
                        </div>
@@ -143,7 +143,7 @@ const Boost = () => {
                     </div>
                 </div>
                 
-                <div className="flex mb-2 justify-between border py-2 rounded-md px-2 w-11/12 mx-auto border-[#1d1d1d] bg-[#282828]">
+                <div className="flex mb-2 justify-between border py-2 rounded-md px-2 w-11/12 mx-auto border-[#1d1d1d] bg-[#282828]" onClick={handleBuyBoost}>
                     <div className="first flex">
                        <Image src={"/energy.svg"} width={22} height={22} className="mr-2" />
                        <div>
@@ -156,7 +156,7 @@ const Boost = () => {
                     </div>
                 </div>
 
-                <div className="flex mb-2 justify-between border py-2 rounded-md px-2 w-11/12 mx-auto border-[#1d1d1d] bg-[#282828]">
+                <div className="flex mb-2 justify-between border py-2 rounded-md px-2 w-11/12 mx-auto border-[#1d1d1d] bg-[#282828]" onClick={handleBuyBoost}>
                     <div className="first flex">
                        <Image src={"/recharge.svg"} width={15} height={15} className="mr-2" />
                        <div>
@@ -168,7 +168,7 @@ const Boost = () => {
                         <Image src={"/right.svg"} width={8} height={8} className="pt-3 mr-2" />
                     </div>
                 </div>
-                <div className="flex justify-between border py-2 rounded-md px-2 w-11/12 mx-auto border-[#1d1d1d] bg-[#282828]">
+                <div className="flex justify-between border py-2 rounded-md px-2 w-11/12 mx-auto border-[#1d1d1d] bg-[#282828]" onClick={handleBuyBoost}>
                     <div className="first flex">
                        <Image src={"/bot.svg"} width={22} height={22} className="mr-2" />
                        <div>
