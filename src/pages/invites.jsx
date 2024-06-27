@@ -30,6 +30,7 @@ import {
   import { Inter } from "next/font/google";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import Navigation from "@/components/Navbar";
   
 const inter = Inter({
     subsets: ['latin'],
@@ -41,19 +42,6 @@ const Invites = () => {
     const router = useRouter()
     const {userId} = router.query
     console.log(userId)
-
-    const navData = [
-        { icon: FaFireAlt, title: "Click", link: `/?userId=${userId}` },
-        { icon: SiGoogletasks, title: "Airdrop", link: `/airdrop?userId=${userId}` },
-        { icon: MdSpaceDashboard, title: "Levels", link: `/levels?userId=${userId}` },
-        { icon: IoMdStats , title: "Stats", link: `/stats?userId=${userId}` },
-        { icon: MdGroups, title: "Invites", link: `/invites?userId=${userId}` },
-      ];
-    
-      const handleNavClick = (link) => {
-      
-        setActiveLink(link);
-      };
 
     return(
         <div className={`bg-[#1d1d1d] h-screen ${inter.className} overflow-hidden text-white`}>
@@ -142,34 +130,7 @@ const Invites = () => {
                 </div>
             </div>
         </div>
-        <Flex
-            position="fixed"
-            bottom={0}
-            left={0}
-            right={0}
-            color={useColorModeValue("#fff", "#fff")}
-            p={3}
-            justifyContent="space-around"
-            zIndex={1}
-            display={useBreakpointValue({ base: "flex", md: "flex", lg: "none" })}
-            bgColor={"#1f2221"}
-          >
-            {navData.map((item, index) => (
-              <Tooltip hasArrow={index === 1} placement="top" key={item.title}>
-                <Flex
-                  flexDir="column"
-                  align="center"
-                  as={NextLink}
-                  href={item.link}
-                  onClick={() => handleNavClick(item.link)}
-                  className={activeLink === item.link ? "text-[#fbce47] border rounded-md px-2 py-2 border-[#423c2c] bg-[#423c2c]" : ""}
-                >
-                  <Icon as={item.icon} boxSize={5} mb={2} />
-                  <Text fontSize={{ base: "xs", md: "md" }}>{item.title}</Text>
-                </Flex>
-              </Tooltip>
-            ))}
-          </Flex>
+        <Navigation userId={userId} />
         </div>
     )
 }
