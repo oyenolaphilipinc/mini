@@ -44,8 +44,8 @@ const Invites = () => {
     console.log(userId)
 
     return(
-        <div className={`bg-[#1d1d1d] h-full min-h-screen ${inter.className} overflow-hidden text-white`}>
-        <div className="mb-4 pt-4">
+        <div className={`bg-[#1d1d1d] h-full min-h-screen ${inter.className} text-white`}>
+        <div className="mb-6 pt-6">
             {/* <div className="flex justify-between">
             <div className="text-white pl-6">
                 <h1 className="flex text-xl text-semibold"><IoMdClose className="w-8 h-8 mr-2" /> Minipanda</h1>
