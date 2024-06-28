@@ -55,7 +55,7 @@ const Invites = () => {
             </div>
             </div> */}
         </div>
-        <div className="invite">
+        <div className="invite" style={{ paddingBottom: '80px', overflowY: 'auto' }}>
             <p className="pb-4 pl-4">Invite friends</p>
             <div className="mb-3 flex justify-between invite-container border w-11/12 mx-auto border-[#1d1d1d] bg-[#282828] px-2 py-2 rounded-md">
                 <div className="pl-3">
