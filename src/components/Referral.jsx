@@ -60,7 +60,7 @@ const Referral = () => {
                     <p className="pt-1 pl-4 text-gray-400 pb-12">How referral levels work? <Link href={"/reflevel"} className="text-[#fbc347] underline">Check</Link></p>
                 </div>
             </div>
-            <div style={{ paddingBottom: '60px', overflowY: 'auto' }}>
+            <div style={{ paddingBottom: '80px', overflowY: 'auto' }}>
                 <h1 className="pl-4 pb-4">My referrals:</h1>
                 <div className="mb-3 border border-[#1d1d1d] bg-[#282828] w-11/12 mx-auto flex rounded-md px-2 py-2">
                     <Image src={"/wilson.svg"} height={40} width={40} className="mr-2" />
