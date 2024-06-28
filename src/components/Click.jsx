@@ -155,7 +155,7 @@ const inter = Inter({
             <p className="flex justify-center text-5xl font-bold pb-3"><Image src={"/coin.svg"} width={50} height={50} className="mr-1" />{count}</p>
             <p className="text-md font-normal flex justify-center">
              <Image src={"/speedometer.svg"} width={20} height={20} className="mr-1" /> 
-             {tapEnergy} / 750
+             {tapEnergy} / {tapDetails ? tapDetails.tapEnergy : '0'}
             </p>
             <div
               className={`pt-12 transition-transform transform ${isScaled && "scale-75"} mb-16`}
@@ -174,7 +174,7 @@ const inter = Inter({
                 <span className="text-2xl font-normal">+1</span>
               </div>
             )}
-            <Link href={"/boost"} className="flex justify-center w-4/12 mx-auto border px-6 py-2 rounded-full bg-[#fbce47] text-black border-[#1d1d1d] text-lg font-semibold"><FaFire className="w-5 h-5 mr-1 mt-1" />Boost</Link>
+            <Link href={`/boost?userId=${userId}`} className="flex justify-center w-4/12 mx-auto border px-6 py-2 rounded-full bg-[#fbce47] text-black border-[#1d1d1d] text-lg font-semibold"><FaFire className="w-5 h-5 mr-1 mt-1" />Boost</Link>
           </div>
           <Navigation userId={userId} />
         </div>

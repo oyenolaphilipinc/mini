@@ -90,7 +90,9 @@ const Boost = () => {
     <div className={`bg-[#1d1d1d] h-screen ${inter.className} text-white`}>
         <div className="mb-8 pt-8 border-b rounded-md pb-4 border-[#fbce47]">
         <div className="flex justify-between">
-        <div className="text-white pl-6">
+        <div className="text-white pl-6 cursor-pointer"  onClick={()=>{
+          router.push(`/?userId=${userId}`)
+        }}>
             <h1 className="flex text-xl text-semibold"><Image src={"/left.svg"} height={9} width={9} className="mr-3" /> Home</h1>
         </div>
         <div className="mr-4 text-white">
