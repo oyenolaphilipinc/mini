@@ -46,10 +46,11 @@ const inter = Inter({
     const [isScaled, setIsScaled] = useState(false);
     const [count, setCount] = useState(0);
     const [tapEnergy, setTapEnergy] = useState(750);
+    const [x, setX] = useState(0);
+    const [y, setY] = useState(0);
     const [showOne, setShowOne] = useState(false);
     const [activeLink, setActiveLink] = useState("/click");
 
-    console.log(tapDetails)
 
     const fetchBalance = async() => {
       if(!userId) return;
@@ -122,7 +123,7 @@ const inter = Inter({
 
 
 
-  const handleImageClick = () => {
+  const handleImageClick = (e) => {
     setCount((prevCount) => prevCount + 1);
     setTapEnergy((prevCount) => prevCount - 1)
     setShowOne(true);
@@ -131,6 +132,8 @@ const inter = Inter({
       setShowOne(false);
       setIsScaled(false);
     }, 500);
+    setX(e.clientX);
+    setY(e.clientY)
   };
 
   useEffect(() => {
@@ -170,7 +173,7 @@ const inter = Inter({
               />
             </div>
             {showOne && (
-              <div className={styles.umaxCoin}>
+              <div className={`${styles.umaxCoin}`} style={{top: `${y}px`, left: `${x}px`}}>
                 <span className="text-2xl font-normal">+1</span>
               </div>
             )}

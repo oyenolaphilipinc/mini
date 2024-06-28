@@ -136,7 +136,7 @@ const Boost = () => {
                        <Image src={"/click.svg"} width={22} height={22} className="mr-2" />
                        <div>
                             <p className="text-sm">Multitap</p>
-                            <p className="flex text-sm"><Image src={"/coin.svg"} width={18} height={18} className="mr-1" />200 | Level 1</p>
+                            <p className="flex text-sm"><Image src={"/coin.svg"} width={18} height={18} className="mr-1" />200 | Level {userDetails && userDetails.level}</p>
                        </div>
                     </div>
                     <div className="second">
@@ -149,7 +149,7 @@ const Boost = () => {
                        <Image src={"/energy.svg"} width={22} height={22} className="mr-2" />
                        <div>
                             <p className="text-sm">Energy limit</p>
-                            <p className="flex text-sm"><Image src={"/coin.svg"} width={18} height={18} className="mr-1" />200 | Level 1</p>
+                            <p className="flex text-sm"><Image src={"/coin.svg"} width={18} height={18} className="mr-1" />200 | Level {userDetails && userDetails.level}</p>
                        </div>
                     </div>
                     <div className="second">
@@ -162,7 +162,7 @@ const Boost = () => {
                        <Image src={"/recharge.svg"} width={15} height={15} className="mr-2" />
                        <div>
                             <p className="text-sm">Recharging speed</p>
-                            <p className="flex text-sm"><Image src={"/coin.svg"} width={18} height={18} className="mr-1" />200 | Level 1</p>
+                            <p className="flex text-sm"><Image src={"/coin.svg"} width={18} height={18} className="mr-1" />200 | Level {userDetails && userDetails.level}</p>
                        </div>
                     </div>
                     <div className="second">
@@ -174,7 +174,7 @@ const Boost = () => {
                        <Image src={"/bot.svg"} width={22} height={22} className="mr-2" />
                        <div>
                             <p className="text-sm">Tap bot</p>
-                            <p className="flex text-sm"><Image src={"/coin.svg"} width={18} height={18} className="mr-1" />200 | Level 1</p>
+                            <p className="flex text-sm"><Image src={"/coin.svg"} width={18} height={18} className="mr-1" />200 | Level {userDetails && userDetails.level}</p>
                        </div>
                     </div>
                     <div className="second">
