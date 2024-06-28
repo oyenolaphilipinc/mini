@@ -108,7 +108,7 @@ const Stats = () => {
                 </div>
             </div>
             {/* The Last part */}
-            <div className="last">
+            <div className="last" style={{ paddingBottom: '40px', overflowY: 'auto' }}>
                 <div className="first mb-3 flex border w-11/12 border-[#1d1d1d] bg-[#282828] px-2 py-2 rounded-md mx-auto">
                     <div className="mr-3 border py-2 px-6 bg-[#fdcf48] rounded-md border-[#282828]"></div>
                     <div>

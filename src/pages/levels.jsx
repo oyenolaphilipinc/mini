@@ -166,7 +166,7 @@ const Dash = () => {
                 </div>
             </div>
         </div>
-        <div className="levels" style={{ paddingBottom: '20px', overflowY: 'auto' }}>
+        <div className="levels" style={{ paddingBottom: '40px', overflowY: 'auto' }}>
             <div className="normal flex justify-between mb-4">
                 <p className="pl-4">Levels</p>
                 <p className="text-[#fbc347] underline pr-4">Claim all</p>
