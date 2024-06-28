@@ -9,7 +9,7 @@
     0% {
       transform: scale(1);
     }
-    50% {
+    80% {
       top: 10%;
       transform: scale(1.2);
     }
