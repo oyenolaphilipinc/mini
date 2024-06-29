@@ -137,8 +137,8 @@ const handleTap = async (clientX, clientY) => {
           </p>
           <div
             className={`pt-12 transition-transform transform  mb-16`}
-            onTouchStart={async (e) =>
-                await handleTap(e.touches[0].clientX, e.touches[0].clientY)
+            onClick={async (e) =>
+                await handleTap(e.clientX, e.clientY)
               }
               onAnimationStart={`${rotateAnim} 0.1s ease `}
                onAnimationEnd={() => setRotateAnim("")}
