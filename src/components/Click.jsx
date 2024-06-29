@@ -60,8 +60,27 @@ const router = useRouter()
     const { userData } = useUserData(userId, name, referralId)
 
 const [screenAxis, setScreenAxis] = useState([]);
-const handleTap = async (clientX, clientY) => {
+ const handleTap = async (clientX, clientY) => {
+    if (!userId) return
+    if (floatingEnergy - tappingPower <= 0) return
+
+    setFloatingEnergy((curr) => curr - tappingPower)
+    setCoinsEarned((coins) => coins + tappingPower)
+    setScreenAxis((prv) => [...prv, { x: clientX, y: clientY, id: Date.now() }])
+    if (clientX < 170) {
+      setRotateAnim(() => rotateCoinLeft)
+    } else if (clientX > 230) {
+      setRotateAnim(() => rotateCoinRight)
+    }
+
+    // update coins in db
+    // const userId = userData.userId
+    await updateUserData(userId, {
+      coinsEarned: coinsEarned + tappingPower,
+      floatingTapEnergy: floatingEnergy - tappingPower,
+    })
   }
+
 
   const removeScreen = (id) => {
     setScreenAxis(screenAxis.filter((screen) => screen.id !== id))
@@ -137,15 +156,14 @@ const handleTap = async (clientX, clientY) => {
           </p>
           <div
             className={`pt-12 transition-transform transform  mb-16`}
-            onClick={async (e) =>
-                await handleTap(e.clientX, e.clientY)
+            onTouchStart={async (e) =>
+                await handleTap(e.touches.clientX, e.touches.clientY)
               }
-              onAnimationStart={`${rotateAnim} 0.1s ease `}
+              animation={`${rotateAnim} 0.1s ease `}
                onAnimationEnd={() => setRotateAnim("")}
           >
             <img src={"/mini.svg"} width={300} height={300} alt={"Coin"} className="mx-auto" />
-          </div>
-          {screenAxis.map((screen) => (
+              {screenAxis.map((screen) => (
           <Text
             key={screen.id}
             position={"absolute"}
@@ -161,6 +179,8 @@ const handleTap = async (clientX, clientY) => {
             +{tappingPower}
           </Text>
         ))}
+          </div>
+        
 
           <Link href={`/boost?userId=${userId}`} className="flex justify-center w-4/12 mx-auto border px-6 py-2 rounded-full bg-[#fbce47] text-black border-[#1d1d1d] text-lg font-semibold">
             <FaFire className="w-5 h-5 mr-1 mt-1" />
