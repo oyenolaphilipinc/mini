@@ -1,188 +1,181 @@
-import {
-    Card,
-    CardBody,
-    Flex,
-    Text,
-    Box,
-    HStack,
-    Icon,
-    Tooltip,
-    useColorModeValue,
-    useBreakpointValue,
-  } from "@chakra-ui/react";
-  import React, { useState, useEffect, useCallback } from "react";
-  import { GiTrophyCup } from "react-icons/gi";
-  import { PiSpeedometer } from "react-icons/pi";
-  import {
-    MdKeyboardArrowRight,
-    MdSpaceDashboard,
-    MdGroups,
-  } from "react-icons/md";
-  import { IoMdStats } from "react-icons/io";
-  import { SiGoogletasks } from "react-icons/si";
-  import { FaFireAlt } from "react-icons/fa";
-  import NextLink from "next/link";
-  import Image from "next/image";
-  import styles from "../components/Dash.module.css";
-  import { IoMdClose } from "react-icons/io";
-  import { BsThreeDotsVertical } from "react-icons/bs";
-  import { FaFire } from "react-icons/fa";
+import React, { useState, useEffect, useCallback, useRef } from "react";
+import { FaFire } from "react-icons/fa";
+import Image from "next/image";
 import Link from "next/link";
-import { Inter } from "next/font/google";
-import Referral from "@/components/Referral";
-import axios from "axios";
-import { useRouter } from "next/router";
 import debounce from "lodash.debounce";
-import Navigation from "./Navbar"
-
-  
+import { getTapDetails, updateTapDetails } from "@/utils/fireConstant";
+import Navigation from "./Navbar";
+import styles from "../components/Dash.module.css";
+import { Inter } from "next/font/google";
+import { useUserData } from "@/hooks/useUserdata";
+import { updateUserData } from "@/helper-functions/getUser";
+import { keyframes } from "@emotion/react";
 const inter = Inter({
-  subsets: ['latin'],
+  subsets: ["latin"],
   variable: '--font-inter',
-})
-  
-  const Click = ({userId, tapDetails}) => {
-    const router = useRouter();
-    const [isScaled, setIsScaled] = useState(false);
-    const [count, setCount] = useState(0);
-    const [tapEnergy, setTapEnergy] = useState(750);
-    const [x, setX] = useState(0);
-    const [y, setY] = useState(0);
-    const [showOne, setShowOne] = useState(false);
-    const [activeLink, setActiveLink] = useState("/click");
+});
+import { Text, Progress } from "@chakra-ui/react";
+import { useRouter } from "next/router";
 
 
-    const fetchBalance = async() => {
-      if(!userId) return;
-        try {
-          const res = await axios.get(`/api/getTapDetailsByUserId?userId=${userId}`);
-          if (res.data.success) {
-            setCount(res.data.data.tapBalance);
-          }
-        } catch (error) {
-          console.error('Error fetching balance:', error);
-        }
-      }
+const floatUpAndFadeOut = keyframes`
+  0% {
+    transform: translateY(0px);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100px);
+    opacity: 0;
+  }
+`
 
-    useEffect(() => {
-      
-  
-      fetchBalance();
-    }, [userId])
+const rotateCoinLeft = keyframes`
+  0% {
+    transform: rotateY(0deg)
+  }
+  100% {
+    transform: rotateY(20deg)
+  }
+`
 
-    const fetchEnergy = async() => {
-      if(!userId) return;
-        try {
-          const res = await axios.get(`/api/getTapDetailsByUserId?userId=${userId}`);
-          if (res.data.success) {
-            setTapEnergy(res.data.data.tapEnergy);
-          }
-        } catch (error) {
-          console.error('Error fetching balance:', error);
-        }
-      }
+const rotateCoinRight = keyframes`
+  0% {
+    transform: rotateY(0deg)
+  }
+  100% {
+    transform: rotateY(-20deg)
+  }
+`
 
-    useEffect(() => {
-      
-  
-      fetchEnergy();
-    }, [userId])
+const Click = ({ userId, name }) => {
+    const [floatingEnergy, setFloatingEnergy] = useState(0)
+  const [coinsEarned, setCoinsEarned] = useState(0)
+  const [tappingEnergy, setTappingEnergy] = useState(0)
+  const [tappingPower, setTappingPower] = useState(0)
+const router = useRouter()
+  const [rotateAnim, setRotateAnim] = useState("")
 
+   const {referralId} = router.query
 
-    const updateEnergy = async(amount) => {
-      try{
-        console.log(`Updating energy for user ${userId} with amount ${amount}`);
-        const res = await axios.post('/api/updateEnergyLevel', { userId, amount: amount});
+    const { userData } = useUserData(userId, name, referralId)
 
-        console.log(res);
-      } catch(error){
-        console.error('Error updating balance:', error)
-      }
-    };
+const [screenAxis, setScreenAxis] = useState([]);
+const handleTap = async (clientX, clientY) => {
+  }
 
-    const debounceUpdateEnergy = useCallback(
-      debounce((amount) => updateEnergy(amount), 100),
-      []
-    );
-
-    const updateBalance = async (amount) => {
-      try {
-        const res = await axios.post('/api/updateBalance', { userId, amount: amount });
-        console.log(res)
-      } catch (error) {
-        console.error('Error updating balance:', error);
-      }
-    };
-  
-     const debouncedUpdateBalance = useCallback(
-    debounce((amount) => updateBalance(amount), 100),
-    []
-  );
-
-
-
-
-
-  const handleImageClick = (e) => {
-    setCount((prevCount) => prevCount + 1);
-    setTapEnergy((prevCount) => prevCount - 1)
-    setShowOne(true);
-    setIsScaled(true);
-    setTimeout(() => {
-      setShowOne(false);
-      setIsScaled(false);
-    }, 500);
-    setX(e.clientX);
-    setY(e.clientY)
-  };
+  const removeScreen = (id) => {
+    setScreenAxis(screenAxis.filter((screen) => screen.id !== id))
+  }
 
   useEffect(() => {
-    if (userId !== null) {
-      debouncedUpdateBalance(count);
+    if (!userData) return
+    const timeLost = calculateLostTime()
+    setCoinsEarned(() => userData.coinsEarned)
+    setTappingEnergy(() => userData.tapEnergy)
+    const energyPerSec = userData.refillEnergy / userData.refillTime
+    const energyLost =
+      userData.floatingTapEnergy + energyPerSec * timeLost
+    if (timeLost >= 3) {
+      if (Number(energyLost.toFixed(0)) >= userData.tapEnergy) {
+        setFloatingEnergy(() => userData.tapEnergy)
+      } else {
+        setFloatingEnergy(() => Number(energyLost.toFixed(0)))
+      }
+    } else {
+      setFloatingEnergy(() => userData.floatingTapEnergy)
     }
-  }, [count, userId, debouncedUpdateBalance]);
+    //setFloatingEnergy(() => userData.floatingTapEnergy)
+    // setRefillEnergy(userData.refilEnergy)
+    setTappingPower(() => userData.tapPower)
+    // setUserId(userData.userId)
+    return () => {}
+  }, [userData])
 
   useEffect(() => {
-    if(userId !== null){
-      debounceUpdateEnergy(tapEnergy);
-    }
-  }, [tapEnergy, userId, debounceUpdateEnergy])
+    if (!userData) return
+    setInterval(() => {
+      setFloatingEnergy((curr) => {
+        if (curr + userData.refillEnergy >= userData.tapEnergy)
+          return userData.tapEnergy
+        return curr + userData.refillEnergy
+      })
+    }, 3000)
+    return () => {}
+  }, [userData])
 
-  
-  
-    return (
-      <>
-        <div className={`bg-[#1d1d1d] h-full min-h-screen ${inter.className}`}>
+  useEffect(() => {
+    if (!userId) return
+    ;(async () => {
+      await updateUserData(userId, {
+        floatingTapEnergy: floatingEnergy,
+        lastUpdatedTime: Date.now() / 1000,
+      })
+    })()
+    return () => {}
+  }, [floatingEnergy, userId])
+
+  const calculateLostTime = () => {
+    const lastUpdate = userData?.lastUpdatedTime
+    const timeNowInSeconds = Date.now() / 1000
+    return timeNowInSeconds - lastUpdate
+  }
+
+
+
+  return (
+    <>
+      <div className={`bg-[#1d1d1d] h-full min-h-screen ${inter.className}`}>
         <div className="pt-6"></div>
-          <div className="text-center text-white pt-4">
-            <p className="flex justify-center text-5xl font-bold pb-3"><Image src={"/coin.svg"} width={50} height={50} className="mr-1" />{count}</p>
-            <p className="text-md font-normal flex justify-center">
-             <Image src={"/speedometer.svg"} width={20} height={20} className="mr-1" /> 
-             {tapEnergy} / {tapDetails ? tapDetails.tapEnergy : '0'}
-            </p>
-            <div
-              className={`pt-12 transition-transform transform ${isScaled && "scale-75"} mb-16`}
-              onClick={handleImageClick}
-            >
-              <img
-                src={"/mini.svg"}
-                width={300}
-                height={300}
-                alt={"Coin"}
-                className="mx-auto"
-              />
-            </div>
-            {showOne && (
-              <div className={`${styles.umaxCoin}`} style={{top: `${y}px`, left: `${x}px`}}>
-                <span className="text-2xl font-normal">+1</span>
-              </div>
-            )}
-            <Link href={`/boost?userId=${userId}`} className="flex justify-center w-4/12 mx-auto border px-6 py-2 rounded-full bg-[#fbce47] text-black border-[#1d1d1d] text-lg font-semibold"><FaFire className="w-5 h-5 mr-1 mt-1" />Boost</Link>
+        <div className="text-center text-white pt-4">
+          <p className="flex justify-center text-5xl font-bold pb-3">
+            <Image src={"/coin.svg"} width={50} height={50} className="mr-1" />
+             {coinsEarned.toLocaleString()}
+          </p>
+          <p className="text-md font-normal flex justify-center">
+            <Image src={"/speedometer.svg"} width={20} height={20} className="mr-1" />
+            {floatingEnergy} / {tappingEnergy}
+          </p>
+          <div
+            className={`pt-12 transition-transform transform  mb-16`}
+            onTouchStart={async (e) =>
+                await handleTap(e.touches[0].clientX, e.touches[0].clientY)
+              }
+              onAnimationStart={`${rotateAnim} 0.1s ease `}
+               onAnimationEnd={() => setRotateAnim("")}
+          >
+            <img src={"/mini.svg"} width={300} height={300} alt={"Coin"} className="mx-auto" />
           </div>
-          <Navigation userId={userId} />
+          {screenAxis.map((screen) => (
+          <Text
+            key={screen.id}
+            position={"absolute"}
+            left={`${screen.x - 10}px`}
+            top={`${screen.y}px`}
+            color={"white"}
+            as={"p"}
+            animation={`${floatUpAndFadeOut} 1s ease forwards`}
+            onAnimationEnd={() => removeScreen(screen.id)}
+            zIndex={"5"}
+            fontSize={"30px"}
+          >
+            +{tappingPower}
+          </Text>
+        ))}
+
+          <Link href={`/boost?userId=${userId}`} className="flex justify-center w-4/12 mx-auto border px-6 py-2 rounded-full bg-[#fbce47] text-black border-[#1d1d1d] text-lg font-semibold">
+            <FaFire className="w-5 h-5 mr-1 mt-1" />
+            Boost
+          </Link>
         </div>
-      </>
-    );
-  };
-  
-  export default Click;
+         <Progress
+                rounded={"10px"}
+                value={(floatingEnergy / tappingEnergy) * 100}
+                min={0}
+              />
+        <Navigation userId={userId} name={name ? name : ""} />
+      </div>
+    </>
+  );
+};
+
+export default Click;

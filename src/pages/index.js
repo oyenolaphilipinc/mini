@@ -1,36 +1,22 @@
 import Head from "next/head";
 import { Inter } from "next/font/google";
 import Click from "@/components/Click";
-import { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import { useUserData } from "@/hooks/useUserdata";
+import { ContextProvider } from "@/context/ContextProvider";
 
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
   const router = useRouter();
-  const { userId } = router.query;
-  console.log(userId)
-  const [tapDetails, setTapDetails] = useState(null)
+  const { referralId, userId, firstName } = router.query;
 
-useEffect(() => {
-    if (userId != null && userId != undefined) {  // Ensure userId is not null or undefined
-      async function createTapDetails() {
-        try {
-          const response = await axios.post('/api/createTapDetails', {
-            userId: userId
-          });
-          setTapDetails(response.data)
-          console.log('TapDetails created:', response.data);
-        } catch (error) {
-          console.error('Error creating TapDetails:', error);
-        }
-      }
+  const { isLoading, name } = useUserData(userId, firstName, referralId);
 
-      createTapDetails();
-    }
-  }, [userId]); 
+
+
   return (
     <>
       <Head>
@@ -39,7 +25,15 @@ useEffect(() => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-        <Click userId={userId}  tapDetails ={tapDetails}/>
+      <ContextProvider userId={userId} firstName={firstName} referralId={referralId}>
+        {isLoading ? (
+          <div className="fixed inset-0 flex items-center justify-center bg-black">
+            <img src="/splash.jpg" alt="Loading" className="w-full h-full object-cover" />
+          </div>
+        ) : (
+          <Click userId={userId} name={name} />
+        )}
+      </ContextProvider>
     </>
   );
 }

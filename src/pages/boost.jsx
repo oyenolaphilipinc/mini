@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import axios from "axios";
 import { toast } from 'react-hot-toast';
+import { getTapDetails, updateTapDetails } from '@/utils/fireConstant';
   
 const inter = Inter({
     subsets: ['latin'],
@@ -19,70 +20,68 @@ const Boost = () => {
     const [userDetails, setUserDetails] = useState(null);
     const [insufficientBalance, setInsufficientBalance] = useState(false);
     const [showError, setShowError] = useState(false);
+    const [level, setLevel] = useState(0)
 
-
-    useEffect(() => {
-        const fetchBalance = async() => {
-            if(!userId) return;
-          try {
-            const res = await axios.get(`/api/getTapDetailsByUserId?userId=${userId}`);
-            if (res.data.success) {
-              setCount(res.data.data.tapBalance);
-            }
-          } catch (error) {
-            console.error('Error fetching balance:', error);
-          }
+useEffect(() => {
+    if (userId) {
+      const unsubscribe = getTapDetails(userId, (details) => {
+        if (details) {
+          setCount(details.tapBalance);
+          setLevel(details.coinLevel);
+          setUserDetails(details);
         }
-    
-        fetchBalance();
-      }, [userId])
+      });
 
-      useEffect(() => {
-        const getLevel = async () => {
-            if(!userId) return;
-            try{
-                const response = await axios.get(`/api/getTapDetailsByUserId?userId=${userId}`);
-                if (response.data.success) {
-                    setUserDetails(response.data.data);
-                } else {
-                    setError('User not found');
-                }
-            } catch(error){
-                console.error("Error fetching data", error);
-            }
-        };
-    
-        getLevel()
-      }, [userId])
-
-      const handleBuyBoost = async () => {
-        if (!userId || !userDetails) return;
-    
-        let levelCost = 2000;
-    
-        if (count >= levelCost) {
-          try {
-            setCount(count - levelCost);
-    
-            const res = await axios.post(`/api/deductBalance`, {
-              userId,
-              amount: levelCost,
-            });
-    
-            if (res.data.success) {
-              toast.success("Purchased Successfully")
-            } else {
-              console.error('Failed to deduct balance:', res.data.message);
-            }
-          } catch (error) {
-            console.error('Error purchasing:', error);
-            toast.error("Error purchasing:", error)
-          }
-        } else {
-          setInsufficientBalance(true);
-          toast.error('Insufficient Balance');
-        }
+      return () => {
+        unsubscribe();
       };
+    }
+  }, [userId]);
+
+  
+     const handleBuyBoost = async (boostType) => {
+    if (!userId || !userDetails) return;
+
+    const levelCost = 200;
+
+    if (count >= levelCost) {
+      try {
+        const newCount = count - levelCost;
+        setCount(newCount);
+        await updateTapDetails(userId, { tapBalance: newCount });
+
+        // Update the specific boost type in Firestore
+        let updates = {};
+        switch (boostType) {
+          case 'multitap':
+            updates = { multitapLevel: (userDetails.multitapLevel || 0) + 1 ,
+              pointPerTap: (userDetails.pointPerTap || 0) + 1  
+            };
+            break;
+          case 'energy':
+            updates = { energyLevel: (userDetails.energyLevel || 1) + 1 };
+            break;
+          case 'recharge':
+            updates = { rechargeLevel: (userDetails.rechargeLevel || 1) + 1 };
+            break;
+          case 'tapbot':
+            updates = { tapbotLevel: (userDetails.tapbotLevel || 1) + 1 };
+            break;
+          default:
+            break;
+        }
+        await updateTapDetails(userId, updates);
+        toast.success('Boost purchased successfully!');
+      } catch (error) {
+        console.error('Error purchasing:', error);
+        toast.error('Error purchasing:', error);
+      }
+    } else {
+      setInsufficientBalance(true);
+      toast.error('Insufficient Balance');
+    }
+  };
+
 
 
 
@@ -103,8 +102,8 @@ const Boost = () => {
             <h1 className="flex pl-4 text-4xl font-bold"><Image src={"/coin.svg"} height={40} width={40} className="mr-1" />{count}</h1>
             <div className="pr-6">
                 <p className="text-sm font-normal">Level</p>
-                {userDetails && (
-                    <p className="text-sm font-semibold">{userDetails.level}</p>
+                {level && (
+                    <p className="text-sm font-semibold">{level}</p>
                 )}
             </div>
         </div>

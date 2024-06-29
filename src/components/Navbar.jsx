@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import Image from "next/image"
 
-const Navigation = ({ userId }) => {
+const Navigation = ({ userId , name}) => {
   const router = useRouter();
   const [activeLink, setActiveLink] = useState(router.asPath);
 
@@ -12,11 +12,11 @@ const Navigation = ({ userId }) => {
   };
 
   const navData = [
-    { imgSrc: '/coin.svg', title: "Click", link: `/?userId=${userId}`, width: 23 },
-    { imgSrc: '/umbrella.svg', title: "Airdrop", link: `/airdrop?userId=${userId}`, width: 23 },
-    { imgSrc: '/ball.svg', title: "Levels", link: `/levels?userId=${userId}`, width: 25, className: "pt-2" },
-    { imgSrc: '/semi.svg', title: "Stats", link: `/stats?userId=${userId}`, width: 23, className: "pt-1" },
-    { imgSrc: '/invite.svg', title: "Invites", link: `/invites?userId=${userId}`, width: 23, className: "pt-1" },
+    { imgSrc: '/coin.svg', title: "Click", link: `/?userId=${userId}&name=${name}`, width: 23 },
+    { imgSrc: '/umbrella.svg', title: "Airdrop", link: `/airdrop?userId=${userId}&name=${name}`, width: 23 },
+    { imgSrc: '/ball.svg', title: "Levels", link: `/levels?userId=${userId}&name=${name}`, width: 25, className: "pt-2" },
+    { imgSrc: '/semi.svg', title: "Stats", link: `/stats?userId=${userId}&name=${name}`, width: 23, className: "pt-1" },
+    { imgSrc: '/invite.svg', title: "Invites", link: `/invites?userId=${userId}&name=${name}`, width: 23, className: "pt-1" },
   ];
 
 
