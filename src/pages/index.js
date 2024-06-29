@@ -1,33 +1,19 @@
 import Head from "next/head";
 import { Inter } from "next/font/google";
 import Click from "@/components/Click";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { createTapDetails } from "@/utils/fireConstant";
 import { useUserData } from "@/hooks/useUserdata";
-import { ContextProvider
- } from "@/context/ContextProvider";
-import WebApp from "@twa-dev/sdk";
+import { ContextProvider } from "@/context/ContextProvider";
 
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
-  const [userId, setUserId] = useState(null)
-  const [firstName, setFirstName] = useState('')
-  const params = new URLSearchParams(location.search)
-  const referralId = Number(params.get("referralId"))
+  const router = useRouter();
+  const { referralId, userId, firstName } = router.query;
 
-  const { isLoading, name } = useUserData(userId, firstName, referralId)
-
-  useEffect(() => {
-    WebApp.expand()
-    const id = WebApp.initDataUnsafe.user?.id
-    const name = WebApp.initDataUnsafe.user?.first_name || null
-    if (!id && !name) return
-    setUserId(id)
-    setFirstName(name)
-  }, [])
+  const { isLoading, name } = useUserData(userId, firstName, referralId);
 
 
 
@@ -39,18 +25,14 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <ContextProvider  userId={userId}
-      firstName={firstName}
-      referralId={referralId}>
-
-      {isLoading ? (
-        <div className="fixed inset-0 flex items-center justify-center bg-black">
-          <img src="/splash.jpg" alt="Loading" className="w-full h-full object-cover" />
-        </div>
-      ) : (
-        <Click userId={userId} name={name} />
-      )}
-
+      <ContextProvider userId={userId} firstName={firstName} referralId={referralId}>
+        {isLoading ? (
+          <div className="fixed inset-0 flex items-center justify-center bg-black">
+            <img src="/splash.jpg" alt="Loading" className="w-full h-full object-cover" />
+          </div>
+        ) : (
+          <Click userId={userId} name={name} />
+        )}
       </ContextProvider>
     </>
   );

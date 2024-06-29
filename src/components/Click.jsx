@@ -15,6 +15,7 @@ const inter = Inter({
   variable: '--font-inter',
 });
 import { Text, Progress } from "@chakra-ui/react";
+import { useRouter } from "next/router";
 
 
 const floatUpAndFadeOut = keyframes`
@@ -51,10 +52,10 @@ const Click = ({ userId, name }) => {
   const [coinsEarned, setCoinsEarned] = useState(0)
   const [tappingEnergy, setTappingEnergy] = useState(0)
   const [tappingPower, setTappingPower] = useState(0)
-  const [params] = useSearchParams()
+const router = useRouter()
   const [rotateAnim, setRotateAnim] = useState("")
 
-   const referralId = Number(params.get("referralId"))
+   const {referralId} = router.query
 
     const { userData } = useUserData(userId, name, referralId)
 
@@ -171,7 +172,7 @@ const handleTap = async (clientX, clientY) => {
                 value={(floatingEnergy / tappingEnergy) * 100}
                 min={0}
               />
-        <Navigation userId={userData.userId} name={name ? name : ""} />
+        <Navigation userId={userId} name={name ? name : ""} />
       </div>
     </>
   );
