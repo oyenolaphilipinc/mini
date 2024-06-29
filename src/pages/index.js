@@ -4,28 +4,32 @@ import Click from "@/components/Click";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { createTapDetails } from "@/utils/fireConstant";
+import { useUserData } from "@/hooks/useUserdata";
+import { ContextProvider
+ } from "@/context/ContextProvider";
+import WebApp from "@twa-dev/sdk";
+
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
-  const router = useRouter();
-  const { userId } = router.query;
-  console.log(userId);
-  const [tapDetails, setTapDetails] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [userId, setUserId] = useState(null)
+  const [firstName, setFirstName] = useState('')
+  const params = new URLSearchParams(location.search)
+  const referralId = Number(params.get("referralId"))
+
+  const { isLoading, name } = useUserData(userId, firstName, referralId)
 
   useEffect(() => {
-    if (userId != null && userId != undefined) {
-      const fetchTapDetails = async () => {
-        setLoading(true);
-        const details = await createTapDetails(userId);
-        setTapDetails(details);
-        setLoading(false);
-      };
+    WebApp.expand()
+    const id = WebApp.initDataUnsafe.user?.id
+    const name = WebApp.initDataUnsafe.user?.first_name || null
+    if (!id && !name) return
+    setUserId(id)
+    setFirstName(name)
+  }, [])
 
-      fetchTapDetails();
-    }
-  }, [userId]);
+
 
   return (
     <>
@@ -35,13 +39,19 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      {loading ? (
+      <ContextProvider  userId={userId}
+      firstName={firstName}
+      referralId={referralId}>
+
+      {isLoading ? (
         <div className="fixed inset-0 flex items-center justify-center bg-black">
           <img src="/splash.jpg" alt="Loading" className="w-full h-full object-cover" />
         </div>
       ) : (
-        <Click userId={userId} tapDetails={tapDetails} />
+        <Click userId={userId} name={name} />
       )}
+
+      </ContextProvider>
     </>
   );
 }
